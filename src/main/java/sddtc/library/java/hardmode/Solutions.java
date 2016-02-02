@@ -2,8 +2,10 @@ package sddtc.library.java.hardmode;
 
 import sddtc.library.java.object.Point;
 
+import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Queue;
 
 /**
  * leetcode hard mode answers
@@ -91,5 +93,57 @@ public class Solutions {
         }
 
         return pi == p.length();
+    }
+
+    /**
+     * no.76 https://leetcode.com/problems/minimum-window-substring/
+     * @param s String s
+     * @param t String t
+     * @return
+     */
+    public String minWindow(String s, String t) {
+        int slength = s.length(), tlength = t.length();
+        Queue<Integer> queue = new ArrayDeque<>();
+        int[] wordCountOfT = new int[256];
+        int[] currentWordCountOfT = new int[256];
+
+        for(int i=0;i<tlength;i++) {
+            wordCountOfT[t.charAt(i)]++;
+        }
+
+        int hasFound = 0;
+        int windowStart = -1, windowEnd = slength;
+
+        for(int i=0; i < slength; i++) {
+
+            if(wordCountOfT[s.charAt(i)] != 0) {
+                queue.add(i);
+                currentWordCountOfT[s.charAt(i)]++;
+
+                if(currentWordCountOfT[s.charAt(i)] <= wordCountOfT[s.charAt(i)]) {
+                    hasFound++;
+                }
+
+                if(hasFound == tlength) {
+                    int k;
+                    do {
+                        k = queue.peek();
+                        queue.poll();
+                        currentWordCountOfT[s.charAt(k)]--;
+                    }
+                    while (wordCountOfT[s.charAt(k)] <= currentWordCountOfT[s.charAt(k)]);
+
+
+                    if(windowEnd - windowStart > i - k) {
+                        windowStart = k;
+                        windowEnd = i;
+                    }
+
+                    hasFound--;
+                }
+            }
+        }
+
+        return windowStart != -1 ? s.substring(windowStart, windowStart + (windowEnd - windowStart + 1)) : "";
     }
 }

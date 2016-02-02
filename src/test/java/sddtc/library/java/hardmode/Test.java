@@ -24,14 +24,25 @@ public class Test {
     @org.junit.Test
     public void isMatch() {
         Assert.assertTrue("1", solutions.isMatch("cabab", "*ab"));
-//        Assert.assertTrue("1", solutions.isMatch("a", "a*"));
-//        Assert.assertTrue("1", solutions.isMatch("", "*"));
-//        Assert.assertFalse("1",solutions.isMatch("aa", "ab"));
-//        Assert.assertTrue("2", solutions.isMatch("aa", "aa"));
-//        Assert.assertFalse("3",solutions.isMatch("aaa", "aa"));
-//        Assert.assertTrue("4",solutions.isMatch("aa", "*"));
-//        Assert.assertTrue("5",solutions.isMatch("aa", "a*"));
-//        Assert.assertTrue("6",solutions.isMatch("ab", "?*"));
-//        Assert.assertFalse("7",solutions.isMatch("aab", "c*a*b"));
+        Assert.assertTrue("1", solutions.isMatch("a", "a*"));
+        Assert.assertTrue("1", solutions.isMatch("", "*"));
+        Assert.assertFalse("1",solutions.isMatch("aa", "ab"));
+        Assert.assertTrue("2", solutions.isMatch("aa", "aa"));
+        Assert.assertFalse("3",solutions.isMatch("aaa", "aa"));
+        Assert.assertTrue("4",solutions.isMatch("aa", "*"));
+        Assert.assertTrue("5",solutions.isMatch("aa", "a*"));
+        Assert.assertTrue("6",solutions.isMatch("ab", "?*"));
+        Assert.assertFalse("7",solutions.isMatch("aab", "c*a*b"));
+    }
+
+    @org.junit.Test
+    public void minWindow() {
+        String s = "ADOBECODEBANC";
+        String t = "ABC";
+        System.out.println(solutions.minWindow(s, t));
+
+        String ss = "eeeeeeeeebadbaccb";
+        String tt = "abc";
+        System.out.println(solutions.minWindow(ss, tt));
     }
 }
