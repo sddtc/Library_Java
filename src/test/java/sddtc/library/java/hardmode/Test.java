@@ -45,4 +45,25 @@ public class Test {
         String tt = "abc";
         System.out.println(solutions.minWindow(ss, tt));
     }
+
+    @org.junit.Test
+    public void isInterleave() {
+//        Assert.assertTrue(solutions.isInterleave("aabcc","dbbca","aadbbcbcac"));
+//        Assert.assertFalse(solutions.isInterleave("aabcc", "dbbca","aadbbbaccc"));
+//        Assert.assertFalse(solutions.isInterleave("a", "", "aa"));
+//        Assert.assertFalse(solutions.isInterleave("", "","a"));
+//        Assert.assertTrue(solutions.isInterleave("a", "", "a"));
+        Assert.assertFalse(solutions.isInterleave("a","b","aba"));
+    }
+//    @org.junit.Test
+//    public void maxNumber() {
+//        int[] nums1 = {3, 4, 6, 5};
+//        int[] nums2 = {9, 1, 2, 5, 8, 3};
+//        int k = 5;
+//
+//        int[] result = solutions.maxNumber(nums1, nums2, k);
+//        for(int i=0;i<result.length;i++) {
+//            System.out.print(result[i]+",");
+//        }
+//    }
 }

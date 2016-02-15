@@ -2,10 +2,7 @@ package sddtc.library.java.hardmode;
 
 import sddtc.library.java.object.Point;
 
-import java.util.ArrayDeque;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * leetcode hard mode answers
@@ -97,6 +94,7 @@ public class Solutions {
 
     /**
      * no.76 https://leetcode.com/problems/minimum-window-substring/
+     *
      * @param s String s
      * @param t String t
      * @return
@@ -107,24 +105,24 @@ public class Solutions {
         int[] wordCountOfT = new int[256];
         int[] currentWordCountOfT = new int[256];
 
-        for(int i=0;i<tlength;i++) {
+        for (int i = 0; i < tlength; i++) {
             wordCountOfT[t.charAt(i)]++;
         }
 
         int hasFound = 0;
         int windowStart = -1, windowEnd = slength;
 
-        for(int i=0; i < slength; i++) {
+        for (int i = 0; i < slength; i++) {
 
-            if(wordCountOfT[s.charAt(i)] != 0) {
+            if (wordCountOfT[s.charAt(i)] != 0) {
                 queue.add(i);
                 currentWordCountOfT[s.charAt(i)]++;
 
-                if(currentWordCountOfT[s.charAt(i)] <= wordCountOfT[s.charAt(i)]) {
+                if (currentWordCountOfT[s.charAt(i)] <= wordCountOfT[s.charAt(i)]) {
                     hasFound++;
                 }
 
-                if(hasFound == tlength) {
+                if (hasFound == tlength) {
                     int k;
                     do {
                         k = queue.peek();
@@ -134,7 +132,7 @@ public class Solutions {
                     while (wordCountOfT[s.charAt(k)] <= currentWordCountOfT[s.charAt(k)]);
 
 
-                    if(windowEnd - windowStart > i - k) {
+                    if (windowEnd - windowStart > i - k) {
                         windowStart = k;
                         windowEnd = i;
                     }
@@ -145,5 +143,53 @@ public class Solutions {
         }
 
         return windowStart != -1 ? s.substring(windowStart, windowStart + (windowEnd - windowStart + 1)) : "";
+    }
+
+
+    /**
+     * no.97 https://leetcode.com/problems/interleaving-string/
+     *
+     * @param s1
+     * @param s2
+     * @param s3
+     * @return
+     */
+    public boolean isInterleave(String s1, String s2, String s3) {
+        if (s1.equals(s2) && s1.equals(s3)) return true;
+        if(("".equals(s1) && s2.equals(s3)) || ("".equals(s2) && s1.equals(s3))) return true;
+        if (("".equals(s1) || "".equals(s2)) && !"".equals(s3)) return false;
+
+        char[] sa3 = s3.toCharArray();
+        char[] sa1 = s1.toCharArray();
+        char[] sa2 = s2.toCharArray();
+        int sl1 = sa1.length;
+        int sl2 = sa2.length;
+        int sl3 = sa3.length;
+
+        int m = 0, n = 0;
+
+        for (int i = 0; i < sl3; i++) {
+            if (sl1 > 0 && m < sl1 && sa3[i] == sa1[m]) {
+                m++;
+            }
+            if (sl2 > 0 && n < sl2 && sa3[i] == sa2[n]) {
+                n++;
+            }
+        }
+
+        return m == sl1 && n == sl2;
+    }
+
+    
+    /**
+     * no.321 https://leetcode.com/problems/create-maximum-number/
+     *
+     * @param nums1
+     * @param nums2
+     * @param k
+     * @return
+     */
+    public int[] maxNumber(int[] nums1, int[] nums2, int k) {
+        return null;//error
     }
 }
