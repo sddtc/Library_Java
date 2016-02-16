@@ -1,5 +1,6 @@
 package sddtc.library.java.hardmode;
 
+import sddtc.library.java.object.Interval;
 import sddtc.library.java.object.Point;
 
 import java.util.*;
@@ -94,6 +95,11 @@ public class Solutions {
 
     /**
      * no.76 https://leetcode.com/problems/minimum-window-substring/
+     * <p/>
+     * For example,
+     * S = "ADOBECODEBANC"
+     * T = "ABC"
+     * Minimum window is "BANC".
      *
      * @param s String s
      * @param t String t
@@ -156,7 +162,7 @@ public class Solutions {
      */
     public boolean isInterleave(String s1, String s2, String s3) {
         if (s1.equals(s2) && s1.equals(s3)) return true;
-        if(("".equals(s1) && s2.equals(s3)) || ("".equals(s2) && s1.equals(s3))) return true;
+        if (("".equals(s1) && s2.equals(s3)) || ("".equals(s2) && s1.equals(s3))) return true;
         if (("".equals(s1) || "".equals(s2)) && !"".equals(s3)) return false;
 
         char[] sa3 = s3.toCharArray();
@@ -180,7 +186,49 @@ public class Solutions {
         return m == sl1 && n == sl2;
     }
 
-    
+    /**
+     * no.57 https://leetcode.com/problems/insert-interval/
+     * <p/>
+     * Example 1:
+     * Given intervals [1,3],[6,9], insert and merge [2,5] in as [1,5],[6,9].
+     * <p/>
+     * Example 2:
+     * Given [1,2],[3,5],[6,7],[8,10],[12,16], insert and merge [4,9] in as [1,2],[3,10],[12,16].
+     * <p/>
+     * This is because the new interval [4,9] overlaps with [3,5],[6,7],[8,10].
+     *
+     * @param intervals
+     * @param newInterval
+     * @return
+     */
+    public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
+        List<Interval> res = new ArrayList<Interval>();
+
+        for (Interval cur : intervals) {
+            if (newInterval == null) {
+                res.add(cur);
+                continue;
+            }
+            if (cur.end < newInterval.start) {
+                res.add(cur);
+                continue;
+            }
+            if (cur.start > newInterval.end) {
+                res.add(newInterval);
+                newInterval = null;
+                res.add(cur);
+                continue;
+            }
+
+            newInterval.start = Math.min(newInterval.start, cur.start);
+            newInterval.end = Math.max(newInterval.end, cur.end);
+        }
+
+        if (newInterval != null) res.add(newInterval);
+
+        return res;
+    }
+
     /**
      * no.321 https://leetcode.com/problems/create-maximum-number/
      *
