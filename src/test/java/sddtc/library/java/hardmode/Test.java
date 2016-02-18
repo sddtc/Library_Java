@@ -2,6 +2,7 @@ package sddtc.library.java.hardmode;
 
 import org.junit.Assert;
 import sddtc.library.java.object.Interval;
+import sddtc.library.java.object.ListNode;
 import sddtc.library.java.object.Point;
 
 import java.util.ArrayList;
@@ -91,6 +92,69 @@ public class Test {
         for (Interval interval : result2) {
             System.out.print("[" + interval.start + "," + interval.end + "],");
         }
+    }
+
+    @org.junit.Test
+    public void mergeKLists() {
+        ListNode l1 = new ListNode(1);
+        l1.next = new ListNode(3);
+        ListNode l2 = new ListNode(2);
+        l2.next = new ListNode(8);
+        ListNode l3 = new ListNode(4);
+        l3.next = new ListNode(5);
+
+        ListNode[] nodes = new ListNode[3];
+        nodes[0] = l1;
+        nodes[1] = l2;
+        nodes[2] = l3;
+
+        ListNode result = solutions.mergeKLists(nodes);
+
+        while (null != result) {
+            System.out.println(result.val);
+            result = result.next;
+        }
+
+
+        ListNode[] listNode = new ListNode[1];
+        ListNode result2 = solutions.mergeKLists(listNode);
+
+        while (null != result2) {
+            System.out.println(result2.val);
+            result2 = result2.next;
+        }
+
+        ListNode[] listNode2 = new ListNode[2];
+        ListNode result3 = solutions.mergeKLists(listNode2);
+
+        while (null != result3) {
+            System.out.println(result3.val);
+            result3 = result3.next;
+        }
+
+        ListNode[] listNode3 = new ListNode[2];
+        listNode3[0] = null;
+        listNode3[1]=new ListNode(1);
+        ListNode result4 = solutions.mergeKLists(listNode3);
+
+        while (null != result4) {
+            System.out.println(result4.val);
+            result4 = result4.next;
+        }
+
+        ListNode[] listNode4 = new ListNode[4];
+        listNode4[0] = null;
+        listNode4[1] = new ListNode(1);
+        listNode4[2] = null;
+        listNode4[3] = new ListNode(2);
+
+        ListNode result5 = solutions.mergeKLists(listNode4);
+
+        while (null != result5) {
+            System.out.println(result5.val);
+            result5 = result5.next;
+        }
+
     }
 
 //    @org.junit.Test

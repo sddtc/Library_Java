@@ -1,6 +1,7 @@
 package sddtc.library.java.hardmode;
 
 import sddtc.library.java.object.Interval;
+import sddtc.library.java.object.ListNode;
 import sddtc.library.java.object.Point;
 
 import java.util.*;
@@ -227,6 +228,73 @@ public class Solutions {
         if (newInterval != null) res.add(newInterval);
 
         return res;
+    }
+
+    /**
+     * no.23 https://leetcode.com/problems/merge-k-sorted-lists/
+     * <p/>
+     * Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+     *
+     * @param lists
+     * @return
+     */
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0) {
+            return null;
+        }
+        return reduce(map(lists, 0, lists.length / 2), map(lists, lists.length / 2 + 1, lists.length - 1));
+    }
+
+    private ListNode map(ListNode[] lists, int from, int to) {
+        if (from > to) {
+            return null;
+        }
+        if (from == to) {
+            return lists[from];
+        }
+        if (from + 1 == to) {
+            return reduce(lists[from], lists[to]);
+        }
+        return reduce(map(lists, from, (from + to) / 2), map(lists, (from + to) / 2 + 1, to));
+    }
+
+    private ListNode reduce(ListNode first, ListNode second) {
+        if (first == null) {
+            return second;
+        }
+        if (second == null) {
+            return first;
+        }
+        ListNode head, pre;
+        if (first.val < second.val) {
+            head = first;
+            pre = first;
+            first = first.next;
+        } else {
+            head = second;
+            pre = second;
+            second = second.next;
+        }
+        while (true) {
+            if (first == null) {
+                pre.next = second;
+                break;
+            }
+            if (second == null) {
+                pre.next = first;
+                break;
+            }
+            if (first.val < second.val) {
+                pre.next = first;
+                pre = pre.next;
+                first = first.next;
+            } else {
+                pre.next = second;
+                pre = pre.next;
+                second = second.next;
+            }
+        }
+        return head;
     }
 
     /**
