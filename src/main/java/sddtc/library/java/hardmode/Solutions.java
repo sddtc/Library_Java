@@ -298,6 +298,49 @@ public class Solutions {
     }
 
     /**
+     * no.56 https://leetcode.com/problems/merge-intervals/
+     * <p/>
+     * <p/>
+     * For example,
+     * Given [1,3],[2,6],[8,10],[15,18],
+     * return [1,6],[8,10],[15,18].
+     *
+     * @param intervals
+     * @return
+     */
+    public List<Interval> merge(List<Interval> intervals) {
+        List<Interval> result = new ArrayList<>();
+        Interval current = null;
+
+        Collections.sort(intervals, new Comparator<Interval>() {
+            @Override
+            public int compare(Interval o1, Interval o2) {
+                return Integer.compare(o1.start, o2.start);
+            }
+        });
+
+        for (int i = 0; i < intervals.size(); i++) {
+            current = intervals.get(i);
+            Interval last = result.size() == 0 ? current : result.get(result.size() - 1);
+
+            if (last.end < current.start) {
+                result.add(current);
+                continue;
+            } else {
+                result.remove(last);
+
+                last.start = Math.min(last.start, current.start);
+                last.end = Math.max(last.end, current.end);
+
+                result.add(last);
+            }
+        }
+
+
+        return result;
+    }
+
+    /**
      * no.321 https://leetcode.com/problems/create-maximum-number/
      *
      * @param nums1

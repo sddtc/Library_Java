@@ -14,6 +14,7 @@ import java.util.List;
 public class Test {
 
     private Solutions solutions = new Solutions();
+    private FastSolutions fastSolutions = new FastSolutions();
 
     @org.junit.Test
     public void maxPoints() {
@@ -155,6 +156,33 @@ public class Test {
             result5 = result5.next;
         }
 
+    }
+
+    @org.junit.Test
+    public void merge() {
+        //Given [1,3],[2,6],[8,10],[15,18],
+        //return [1,6],[8,10],[15,18].
+        List<Interval> demo1 = new ArrayList<>();
+        demo1.add(new Interval(1,3));
+        demo1.add(new Interval(2,6));
+        demo1.add(new Interval(8,10));
+        demo1.add(new Interval(15,18));
+
+        List<Interval> result1 = fastSolutions.merge(demo1);
+        for(Interval i:result1) {
+            System.out.print("[" + i.start + "," + i.end + "]");
+        }
+
+        //2
+        System.out.println();
+        List<Interval> demo2 = new ArrayList<>();
+        demo2.add(new Interval(1,4));
+        demo2.add(new Interval(0,0));
+
+        List<Interval> result2 = fastSolutions.merge(demo2);
+        for(Interval i:result2) {
+            System.out.print("[" + i.start + "," + i.end + "]");
+        }
     }
 
 //    @org.junit.Test
