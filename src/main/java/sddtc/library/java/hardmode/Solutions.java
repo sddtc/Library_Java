@@ -341,8 +341,8 @@ public class Solutions {
     }
 
     /**
-     *
      * no.123 https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/
+     *
      * @param prices
      * @return
      */
@@ -353,25 +353,73 @@ public class Solutions {
         int[] leftProfit = new int[lenght];
         int leftMaxProfit = 0;
         int leftMin = prices[0];
-        for (int i=0; i<lenght; i++) {
+        for (int i = 0; i < lenght; i++) {
             if (prices[i] < leftMin) leftMin = prices[i];
-            if (prices[i] - leftMin > leftMaxProfit) leftMaxProfit = prices[i]-leftMin;
+            if (prices[i] - leftMin > leftMaxProfit) leftMaxProfit = prices[i] - leftMin;
             leftProfit[i] = leftMaxProfit;
         }
 
         int maxProfit = 0;
         int rightMaxProfit = 0;
-        int rightMax = prices[lenght-1];
-        for (int i=lenght-1; i>=0; i--) {
+        int rightMax = prices[lenght - 1];
+        for (int i = lenght - 1; i >= 0; i--) {
             if (prices[i] > rightMax) rightMax = prices[i];
             if (rightMax - prices[i] > rightMaxProfit) rightMaxProfit = rightMax - prices[i];
-            int currentProfit = rightMaxProfit + (i>0 ? leftProfit[i-1] : 0);
+            int currentProfit = rightMaxProfit + (i > 0 ? leftProfit[i - 1] : 0);
             if (currentProfit > maxProfit) {
                 maxProfit = currentProfit;
             }
         }
 
         return maxProfit;
+    }
+
+    /**
+     * no.41 https://leetcode.com/problems/first-missing-positive/
+     * @param nums
+     * @return
+     */
+    public int firstMissingPositive(int[] nums) {
+        if (nums == null || nums.length == 0) return 1;
+        int len = nums.length;
+        int i = 0, j = len - 1;
+        // Re-arrange the nagative numbers to the end of array
+        while (i <= j) {
+            if (nums[i] <= 0) {
+                while (i <= j && nums[j] <= 0) {
+                    j--;
+                }
+                if (i < j) {
+                    int temp = nums[i];
+                    nums[i] = nums[j];
+                    nums[j] = temp;
+                    j--;
+                }
+            }
+            i++;
+        }
+
+        // Re-arrange the positive numbers to make the number locates at corresponding index
+        i = 0;
+        len = j + 1;
+        while (i < len) {
+            if (nums[i] > len || nums[nums[i] - 1] == nums[i]) {
+                i++;
+            } else {
+                int temp = nums[i];
+                nums[i] = nums[temp - 1];
+                nums[temp - 1] = temp;
+            }
+        }
+
+        // Check which is the first positive number missing
+        i = 0;
+        while (i < len) {
+            if (nums[i] != i + 1) return i + 1;
+            i++;
+        }
+
+        return len + 1;
     }
 
     /**
