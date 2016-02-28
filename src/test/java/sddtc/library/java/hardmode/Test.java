@@ -67,8 +67,8 @@ public class Test {
     public void interval() {
         //demo one
         List<Interval> list = new ArrayList<>();
-        list.add(new Interval(1,3));
-        list.add(new Interval(6,9));
+        list.add(new Interval(1, 3));
+        list.add(new Interval(6, 9));
         Interval newInterval = new Interval(2, 5);
         List<Interval> result = solutions.insert(list, newInterval);
 
@@ -81,11 +81,11 @@ public class Test {
         //demo two
         List<Interval> list2 = new ArrayList<>();
 
-        list2.add(new Interval(1,2));
-        list2.add(new Interval(3,5));
-        list2.add(new Interval(6,7));
-        list2.add(new Interval(8,10));
-        list2.add(new Interval(12,16));
+        list2.add(new Interval(1, 2));
+        list2.add(new Interval(3, 5));
+        list2.add(new Interval(6, 7));
+        list2.add(new Interval(8, 10));
+        list2.add(new Interval(12, 16));
 
         Interval newInterval2 = new Interval(4, 9);
         List<Interval> result2 = solutions.insert(list2, newInterval2);
@@ -135,7 +135,7 @@ public class Test {
 
         ListNode[] listNode3 = new ListNode[2];
         listNode3[0] = null;
-        listNode3[1]=new ListNode(1);
+        listNode3[1] = new ListNode(1);
         ListNode result4 = solutions.mergeKLists(listNode3);
 
         while (null != result4) {
@@ -163,26 +163,34 @@ public class Test {
         //Given [1,3],[2,6],[8,10],[15,18],
         //return [1,6],[8,10],[15,18].
         List<Interval> demo1 = new ArrayList<>();
-        demo1.add(new Interval(1,3));
-        demo1.add(new Interval(2,6));
-        demo1.add(new Interval(8,10));
-        demo1.add(new Interval(15,18));
+        demo1.add(new Interval(1, 3));
+        demo1.add(new Interval(2, 6));
+        demo1.add(new Interval(8, 10));
+        demo1.add(new Interval(15, 18));
 
         List<Interval> result1 = fastSolutions.merge(demo1);
-        for(Interval i:result1) {
+        for (Interval i : result1) {
             System.out.print("[" + i.start + "," + i.end + "]");
         }
 
         //2
         System.out.println();
         List<Interval> demo2 = new ArrayList<>();
-        demo2.add(new Interval(1,4));
-        demo2.add(new Interval(0,0));
+        demo2.add(new Interval(1, 4));
+        demo2.add(new Interval(0, 0));
 
         List<Interval> result2 = fastSolutions.merge(demo2);
-        for(Interval i:result2) {
+        for (Interval i : result2) {
             System.out.print("[" + i.start + "," + i.end + "]");
         }
+    }
+
+    @org.junit.Test
+    public void isScramble() {
+        String s1 = "great";
+        String s2 = "rgate";
+
+        System.out.println(solutions.isScramble(s1, s2));
     }
 
 //    @org.junit.Test
