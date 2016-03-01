@@ -457,17 +457,4 @@ public class Solutions {
         }
         return false;
     }
-
-
-    /**
-     * no.321 https://leetcode.com/problems/create-maximum-number/
-     *
-     * @param nums1
-     * @param nums2
-     * @param k
-     * @return
-     */
-    public int[] maxNumber(int[] nums1, int[] nums2, int k) {
-        return null;//error
-    }
 }
