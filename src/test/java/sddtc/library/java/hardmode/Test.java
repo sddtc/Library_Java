@@ -193,15 +193,12 @@ public class Test {
         System.out.println(solutions.isScramble(s1, s2));
     }
 
-//    @org.junit.Test
-//    public void maxNumber() {
-//        int[] nums1 = {3, 4, 6, 5};
-//        int[] nums2 = {9, 1, 2, 5, 8, 3};
-//        int k = 5;
-//
-//        int[] result = solutions.maxNumber(nums1, nums2, k);
-//        for(int i=0;i<result.length;i++) {
-//            System.out.print(result[i]+",");
-//        }
-//    }
+    @org.junit.Test
+    public void minDistance() {
+        String one = "abc";
+        String two = "bce";
+
+        int step = solutions.minDistance(one, two);
+        System.out.print(step);
+    }
 }

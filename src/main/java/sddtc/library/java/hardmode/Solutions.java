@@ -457,4 +457,44 @@ public class Solutions {
         }
         return false;
     }
+
+    /**
+     * no.72 https://leetcode.com/problems/edit-distance/
+     * <p/>
+     * You have the following 3 operations permitted on a word:
+     * a) Insert a character
+     * b) Delete a character
+     * c) Replace a character
+     *
+     * @param word1
+     * @param word2
+     * @return
+     */
+    public int minDistance(String word1, String word2) {
+        int[][] mem = new int[word1.length() + 1][word2.length() + 1];
+        for (int[] row : mem) Arrays.fill(row, -1);
+        mem[word1.length()][word2.length()] = 0;
+        return minDist(word1, 0, word2, 0, mem);
+    }
+
+    private int minDist(String word1, int i, String word2, int j, int[][] mem) {
+        if (i == word1.length() && j == word2.length()) return 0;
+        if (i == word1.length()) {
+            mem[i][j] = mem[i][j + 1] != -1 ? mem[i][j + 1] + 1 : minDist(word1, i, word2, j + 1, mem) + 1;
+            return mem[i][j];
+        }
+        if (j == word2.length()) {
+            mem[i][j] = mem[i + 1][j] != -1 ? mem[i + 1][j] + 1 : minDist(word1, i + 1, word2, j, mem) + 1;
+            return mem[i][j];
+        }
+        if (word1.charAt(i) == word2.charAt(j)) {
+            mem[i][j] = mem[i + 1][j + 1] != -1 ? mem[i + 1][j + 1] : minDist(word1, i + 1, word2, j + 1, mem);
+            return mem[i][j];
+        }
+        int w1 = mem[i + 1][j] != -1 ? mem[i + 1][j] + 1 : minDist(word1, i + 1, word2, j, mem) + 1;
+        int w2 = mem[i][j + 1] != -1 ? mem[i][j + 1] + 1 : minDist(word1, i, word2, j + 1, mem) + 1;
+        int w1w2 = mem[i + 1][j + 1] != -1 ? mem[i + 1][j + 1] + 1 : minDist(word1, i + 1, word2, j + 1, mem) + 1;
+        mem[i][j] = Math.min(w1w2, Math.min(w1, w2));
+        return mem[i][j];
+    }
 }
