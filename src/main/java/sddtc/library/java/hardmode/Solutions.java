@@ -497,4 +497,51 @@ public class Solutions {
         mem[i][j] = Math.min(w1w2, Math.min(w1, w2));
         return mem[i][j];
     }
+
+    /**
+     * no.71 https://leetcode.com/problems/simplify-path/
+     *
+     * @param path
+     * @return
+     */
+    public String simplifyPath(String path) {
+        int length = path.length();
+        String[] stack = new String[length / 2];
+        int prt = 0;
+        int i = 0;
+        while (i < length) {
+            char c = path.charAt(i);
+            if (c == '/') {
+                i++;
+            } else if (c == '.') {
+                int j = i + 1;
+                while (j < length && path.charAt(j) != '/') {
+                    j++;
+                }
+                if (j - i == 2 && path.charAt(i + 1) == '.') {
+                    if (prt > 0) {
+                        prt--;
+                    }
+                } else if (j - i > 2) {
+                    stack[prt++] = path.substring(i, j);
+                }
+                i = j;
+            } else {
+                int j = i + 1;
+                while (j < length && path.charAt(j) != '/') {
+                    j++;
+                }
+                stack[prt++] = path.substring(i, j);
+                i = j;
+            }
+        }
+
+        StringBuilder result = new StringBuilder();
+        for (int j = 0; j < prt; j++) {
+            result.append("/");
+            result.append(stack[j]);
+        }
+
+        return result.length() == 0 ? "/" : result.toString();
+    }
 }

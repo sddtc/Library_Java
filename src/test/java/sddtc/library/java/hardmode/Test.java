@@ -201,4 +201,17 @@ public class Test {
         int step = solutions.minDistance(one, two);
         System.out.print(step);
     }
+
+    @org.junit.Test
+    public void simplePaths() {
+        String p1 = "/home/";
+        String p2 = "/a/./b/../../c/";
+        String p3 = "///";
+        String p4 = "/a/...";
+
+        System.out.println(solutions.simplifyPath(p1));
+        System.out.println(solutions.simplifyPath(p2));
+        System.out.println(solutions.simplifyPath(p3));
+        System.out.println(solutions.simplifyPath(p4));
+    }
 }
