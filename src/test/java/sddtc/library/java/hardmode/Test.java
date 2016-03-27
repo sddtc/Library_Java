@@ -214,4 +214,13 @@ public class Test {
         System.out.println(solutions.simplifyPath(p3));
         System.out.println(solutions.simplifyPath(p4));
     }
+
+    @org.junit.Test
+    public void bitCount() {
+        int num = 5;
+        int[] result = solutions.countBits(num);
+        for (int i = 0; i < result.length; i++) {
+            System.out.print(result[i] + ",");
+        }
+    }
 }

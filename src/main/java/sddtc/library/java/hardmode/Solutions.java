@@ -583,4 +583,28 @@ public class Solutions {
 
         return count == 0;
     }
+
+
+    /**
+     * no.338 https://leetcode.com/problems/counting-bits/
+     * @param num example:5
+     * @return [0,1,1,2,1,2]
+     */
+    public int[] countBits(int num) {
+        int[] result = new int[num+1];
+        for(int i=0;i<=num;i++) {
+            int bitCount = 0;
+            int n = i;
+
+            while(n>0) {
+                if(n%2==1) {
+                    bitCount++;
+                }
+                n = n>>1;
+            }
+
+            result[i] = bitCount;
+        }
+        return result;
+    }
 }
