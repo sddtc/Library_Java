@@ -587,23 +587,38 @@ public class Solutions {
 
     /**
      * no.338 https://leetcode.com/problems/counting-bits/
+     *
      * @param num example:5
-     * @return [0,1,1,2,1,2]
+     * @return [0, 1, 1, 2, 1, 2]
      */
     public int[] countBits(int num) {
-        int[] result = new int[num+1];
-        for(int i=0;i<=num;i++) {
+        int[] result = new int[num + 1];
+        for (int i = 0; i <= num; i++) {
             int bitCount = 0;
             int n = i;
 
-            while(n>0) {
-                if(n%2==1) {
+            while (n > 0) {
+                if (n % 2 == 1) {
                     bitCount++;
                 }
-                n = n>>1;
+                n = n >> 1;
             }
 
             result[i] = bitCount;
+        }
+        return result;
+    }
+
+    /**
+     * no.233 https://leetcode.com/problems/number-of-digit-one/
+     *
+     * @param n example:13
+     * @return 6 because:1,10,11,12,13
+     */
+    public int countDigitOne(int n) {
+        int result = 0;
+        for (long i = 1; i <= n; i *= 10) {
+            result += (n / i + 8) / 10 * i + (n / i % 10 == 1 ? n % i + 1 : 0);
         }
         return result;
     }

@@ -223,4 +223,10 @@ public class Test {
             System.out.print(result[i] + ",");
         }
     }
+
+    @org.junit.Test
+    public void countDigit() {
+        int n = 1410065408;
+        System.out.print(solutions.countDigitOne(n));
+    }
 }
