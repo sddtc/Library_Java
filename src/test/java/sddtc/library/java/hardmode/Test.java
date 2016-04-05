@@ -229,4 +229,14 @@ public class Test {
         int n = 1410065408;
         System.out.print(solutions.countDigitOne(n));
     }
+
+    @org.junit.Test
+    public void removeDuplicateLetters() {
+        System.out.println((int)'a');
+        System.out.println((char)97);
+        String s1 = "bcabc";
+        String s2 = "cbacdcbc";
+        System.out.println(solutions.removeDuplicateLetters(s1));
+        System.out.println(solutions.removeDuplicateLetters(s2));
+    }
 }
