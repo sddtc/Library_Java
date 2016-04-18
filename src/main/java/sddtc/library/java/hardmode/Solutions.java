@@ -627,9 +627,10 @@ public class Solutions {
      * no.316 https://leetcode.com/problems/remove-duplicate-letters/
      * First loop: use an array cnt[] to count the number of times
      * appeared for each letter in s.
-     *
+     * <p/>
      * Second loop (Greedy): use a stack, pop() while (!stack.isEmpty()
      * && (sc = stack.peek()) >= c && cnt[sc] > 0)
+     *
      * @param s 字符串
      * @return 字典排序的不重复字符串
      */
@@ -662,5 +663,31 @@ public class Solutions {
             inRes[c] = true;
         }
         return String.valueOf(res).substring(0, end + 1);
+    }
+
+    /**
+     * no.335 https://leetcode.com/problems/self-crossing/
+     * Given x = [2, 1, 1, 2],
+     * ┌───┐
+     * │   │
+     * └───┼──>
+     * Return true (self crossing)
+     *
+     * @param x
+     * @return
+     */
+    public boolean isSelfCrossing(int[] x) {
+        if (x.length >= 5 && x[1] == x[3] && x[2] - x[4] <= x[0]) { // 5th line merges with the 1st one
+            return true;
+        }
+        for (int i = 3; i < x.length; ++i) {
+            if (x[i - 1] <= x[i - 3] && x[i] >= x[i - 2] // crosses the line three steps behind
+                    || i >= 5 && x[i - 2] >= x[i - 4]
+                    && x[i - 3] - x[i - 1] >= 0 && x[i - 3] - x[i - 1] <= x[i - 5]
+                    && x[i] >= x[i - 2] - x[i - 4]) { // crosses the line five steps behind
+                return true;
+            }
+        }
+        return false;
     }
 }
