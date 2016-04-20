@@ -9,14 +9,11 @@ import java.util.List;
 /**
  * something amazing and fast
  * coooool!!!
- * <p/>
  * Created by sddtc on 16/2/21.
  */
 public class FastSolutions {
     /**
      * no.56 https://leetcode.com/problems/merge-intervals/
-     * <p/>
-     * <p/>
      * For example,
      * Given [1,3],[2,6],[8,10],[15,18],
      * return [1,6],[8,10],[15,18].
