@@ -8,7 +8,6 @@ import java.util.*;
 
 /**
  * leetcode hard mode answers
- * <p/>
  * Created by sddtc on 16/1/20.
  */
 public class Solutions {
@@ -96,7 +95,6 @@ public class Solutions {
 
     /**
      * no.76 https://leetcode.com/problems/minimum-window-substring/
-     * <p/>
      * For example,
      * S = "ADOBECODEBANC"
      * T = "ABC"
@@ -189,13 +187,10 @@ public class Solutions {
 
     /**
      * no.57 https://leetcode.com/problems/insert-interval/
-     * <p/>
      * Example 1:
      * Given intervals [1,3],[6,9], insert and merge [2,5] in as [1,5],[6,9].
-     * <p/>
      * Example 2:
      * Given [1,2],[3,5],[6,7],[8,10],[12,16], insert and merge [4,9] in as [1,2],[3,10],[12,16].
-     * <p/>
      * This is because the new interval [4,9] overlaps with [3,5],[6,7],[8,10].
      *
      * @param intervals
@@ -232,7 +227,6 @@ public class Solutions {
 
     /**
      * no.23 https://leetcode.com/problems/merge-k-sorted-lists/
-     * <p/>
      * Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
      *
      * @param lists
@@ -299,8 +293,6 @@ public class Solutions {
 
     /**
      * no.56 https://leetcode.com/problems/merge-intervals/
-     * <p/>
-     * <p/>
      * For example,
      * Given [1,3],[2,6],[8,10],[15,18],
      * return [1,6],[8,10],[15,18].
@@ -426,7 +418,6 @@ public class Solutions {
     /**
      * no.87 https://leetcode.com/problems/scramble-string/
      * Below is one possible representation of s1 = "great":
-     * <p/>
      * great
      * /    \
      * gr    eat
@@ -460,7 +451,6 @@ public class Solutions {
 
     /**
      * no.72 https://leetcode.com/problems/edit-distance/
-     * <p/>
      * You have the following 3 operations permitted on a word:
      * a) Insert a character
      * b) Delete a character
@@ -627,7 +617,6 @@ public class Solutions {
      * no.316 https://leetcode.com/problems/remove-duplicate-letters/
      * First loop: use an array cnt[] to count the number of times
      * appeared for each letter in s.
-     * <p/>
      * Second loop (Greedy): use a stack, pop() while (!stack.isEmpty()
      * && (sc = stack.peek()) >= c && cnt[sc] > 0)
      *
@@ -740,5 +729,53 @@ public class Solutions {
         }
 
         return result;
+    }
+
+    /**
+     * no.51 https://leetcode.com/problems/n-queens/
+     *
+     * @param n n皇后问题
+     * @return
+     */
+    public List<List<String>> solveNQueens(int n) {
+        int mark[] = new int[n];
+        boolean x_mark[] = new boolean[n];
+        List<List<String>> ret = new ArrayList<>();
+        Recur(n, mark, x_mark, ret, n);
+        return ret;
+    }
+    public boolean Recur(int n, int mark[], boolean x_mark[], List<List<String>> ret, int depth) {
+        if (depth == 0) {
+            List<String> s_ret = new ArrayList<String>();
+            char[] lin = new char[n];
+            for (int i = 0; i < n; i++)
+                lin[i] = '.';
+            for (int i = 0; i < n; i++) {
+                lin[mark[i]] = 'Q';
+                s_ret.add(new String(lin));
+                lin[mark[i]] = '.';
+            }
+            ret.add(s_ret);
+            return true;
+        } else {
+            for (int i = 0; i < n; i++) {
+                if (!x_mark[i] && valid(n, depth - 1, i, mark)) {
+                    x_mark[i] = true;
+                    mark[depth - 1] = i;
+                    Recur(n, mark, x_mark, ret, depth - 1);
+                    x_mark[i] = false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean valid(int n, int row, int index, int mark[]) {
+        for (int i = row + 1; i < n; i++) {
+            int colDis = Math.abs(index - mark[i]);
+            int rowDis = i - row;
+            if (colDis == rowDis) return false;
+        }
+        return true;
     }
 }
