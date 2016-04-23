@@ -3,6 +3,7 @@ package sddtc.library.java.hardmode;
 import sddtc.library.java.object.Interval;
 import sddtc.library.java.object.ListNode;
 import sddtc.library.java.object.Point;
+import sddtc.library.java.object.TreeNode;
 
 import java.util.*;
 
@@ -744,6 +745,7 @@ public class Solutions {
         Recur(n, mark, x_mark, ret, n);
         return ret;
     }
+
     public boolean Recur(int n, int mark[], boolean x_mark[], List<List<String>> ret, int depth) {
         if (depth == 0) {
             List<String> s_ret = new ArrayList<String>();
@@ -777,5 +779,42 @@ public class Solutions {
             if (colDis == rowDis) return false;
         }
         return true;
+    }
+
+    /**
+     * no.99 https://leetcode.com/problems/recover-binary-search-tree/
+     *
+     * @param root
+     */
+    TreeNode pre = null;
+    TreeNode first = null;
+    TreeNode second = null;
+    public void recoverTree(TreeNode root) {
+        if (null == root) {
+            return;
+        }
+        dfs(root);
+        if (null != first && null != second) {
+            int temp = first.val;
+            first.val = second.val;
+            second.val = temp;
+        }
+    }
+    private void dfs(TreeNode root) {
+        if (null != root.left) {
+            dfs(root.left);
+        }
+        if (null != pre && pre.val > root.val) {
+            if (first == null) {
+                first = pre;
+            }
+            if (null != first) {
+                second = root;
+            }
+        }
+        pre = root;
+        if (null != root.right) {
+            dfs(root.right);
+        }
     }
 }
