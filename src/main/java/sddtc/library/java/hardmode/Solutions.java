@@ -789,6 +789,7 @@ public class Solutions {
     TreeNode pre = null;
     TreeNode first = null;
     TreeNode second = null;
+
     public void recoverTree(TreeNode root) {
         if (null == root) {
             return;
@@ -800,6 +801,7 @@ public class Solutions {
             second.val = temp;
         }
     }
+
     private void dfs(TreeNode root) {
         if (null != root.left) {
             dfs(root.left);
@@ -816,5 +818,41 @@ public class Solutions {
         if (null != root.right) {
             dfs(root.right);
         }
+    }
+
+    /**
+     * no.42 https://leetcode.com/problems/trapping-rain-water/
+     * Given n non-negative integers representing an elevation map where the width of each bar is 1,
+     * compute how much water it is able to trap after raining.
+     * For example,
+     * Given [0,1,0,2,1,0,1,3,2,1,2,1], return 6.
+     *
+     * @param height
+     * @return
+     */
+    public int trap(int[] height) {
+        if (null == height || height.length == 0) {
+            return 0;
+        }
+        int start = 0;
+        int end = height.length - 1;
+        int smaller;
+        int area = 0;
+        while (start < end) {
+            if (height[start] < height[end]) {
+                smaller = height[start];
+                while (start < end && height[start] <= smaller) {
+                    area += smaller - height[start];
+                    start++;
+                }
+            } else {
+                smaller = height[end];
+                while (start < end && height[end] <= smaller) {
+                    area += smaller - height[end];
+                    end--;
+                }
+            }
+        }
+        return area;
     }
 }
