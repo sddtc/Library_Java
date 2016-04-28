@@ -855,4 +855,46 @@ public class Solutions {
         }
         return area;
     }
+
+    /**
+     * no.29 https://leetcode.com/problems/divide-two-integers/
+     *
+     * @param dividend 被除数
+     * @param divisor  除数
+     * @return
+     */
+    public int divide(int dividend, int divisor) {
+        if (divisor == 0) {
+            return Integer.MAX_VALUE;
+        }
+        boolean isNeg = (dividend ^ divisor) >>> 31 == 1;
+        int result = 0;
+        if (dividend == Integer.MIN_VALUE) {
+            dividend += Math.abs(divisor);
+            if (divisor == -1) {
+                return Integer.MAX_VALUE;
+            }
+            result++;
+        }
+        if (divisor == Integer.MIN_VALUE) {
+            return result;
+        }
+        dividend = Math.abs(dividend);
+        divisor = Math.abs(divisor);
+        int digit = 0;
+        while (divisor <= (dividend >> 1)) {
+            divisor <<= 1;
+            digit++;
+        }
+
+        while (digit >= 0) {
+            if (dividend >= divisor) {
+                result += 1 << digit;
+                dividend -= divisor;
+            }
+            divisor >>= 1;
+            digit--;
+        }
+        return isNeg ? -result : result;
+    }
 }
