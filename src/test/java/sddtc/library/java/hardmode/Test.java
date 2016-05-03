@@ -4,6 +4,7 @@ import org.junit.Assert;
 import sddtc.library.java.object.Interval;
 import sddtc.library.java.object.ListNode;
 import sddtc.library.java.object.Point;
+import sddtc.library.java.object.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -232,11 +233,22 @@ public class Test {
 
     @org.junit.Test
     public void removeDuplicateLetters() {
-        System.out.println((int)'a');
-        System.out.println((char)97);
+        System.out.println((int) 'a');
+        System.out.println((char) 97);
         String s1 = "bcabc";
         String s2 = "cbacdcbc";
         System.out.println(solutions.removeDuplicateLetters(s1));
         System.out.println(solutions.removeDuplicateLetters(s2));
+    }
+
+    @org.junit.Test
+    public void postorder() {
+        TreeNode root = new TreeNode(1);
+        TreeNode right = new TreeNode(2);
+        TreeNode left = new TreeNode(3);
+        root.right = right;
+        right.left = left;
+        List<Integer> result = solutions.postorderTraversal(root);
+        System.out.println(result);
     }
 }

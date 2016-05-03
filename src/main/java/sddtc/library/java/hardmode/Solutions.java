@@ -946,4 +946,32 @@ public class Solutions {
 
         return pseudoHead.next;
     }
+
+    /**
+     * no.145 https://leetcode.com/problems/binary-tree-postorder-traversal/
+     *
+     * @param root
+     * @return
+     */
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        if (null == root) {
+            return list;
+        }
+
+        postorder(root.left, list);
+        postorder(root.right, list);
+        list.add(root.val);
+
+        return list;
+    }
+
+    private List<Integer> postorder(TreeNode node, List<Integer> result) {
+        if (null != node) {
+            postorder(node.left, result);
+            postorder(node.right, result);
+            result.add(node.val);
+        }
+        return null;
+    }
 }
