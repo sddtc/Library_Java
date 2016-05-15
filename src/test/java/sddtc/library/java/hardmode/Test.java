@@ -251,4 +251,12 @@ public class Test {
         List<Integer> result = solutions.postorderTraversal(root);
         System.out.println(result);
     }
+
+    @org.junit.Test
+    public void median() {
+        int[] n1 = {1,2,3};
+        int[] n2 = {4};
+
+        System.out.println(solutions.findMedianSortedArrays(n1, n2));
+    }
 }
