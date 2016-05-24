@@ -254,9 +254,20 @@ public class Test {
 
     @org.junit.Test
     public void median() {
-        int[] n1 = {1,2,3};
+        int[] n1 = {1, 2, 3};
         int[] n2 = {4};
 
         System.out.println(solutions.findMedianSortedArrays(n1, n2));
     }
+
+    @org.junit.Test
+    public void numberToWords() {
+        int num1 = 123;
+        int num2 = 12345;
+        int num3 = 1234567;
+        System.out.println(solutions.numberToWords(num1));
+        System.out.println(solutions.numberToWords(num2));
+        System.out.println(solutions.numberToWords(num3));
+    }
+
 }
