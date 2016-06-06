@@ -1137,7 +1137,6 @@ public class Solutions {
         if (null == matrix || matrix.length == 0 || matrix[0].length == 0) {
             return 0;
         }
-
         int[] height = new int[matrix[0].length];
         for (int i = 0; i < matrix[0].length; i++) {
             if (matrix[0][i] == '1') {
