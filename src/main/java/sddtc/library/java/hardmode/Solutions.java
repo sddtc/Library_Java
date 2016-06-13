@@ -1041,4 +1041,273 @@ public class Solutions {
         }
         return res;
     }
+
+    /**
+     * no.237 https://leetcode.com/problems/integer-to-english-words/
+     * 123 -> "One Hundred Twenty Three"
+     * 12345 -> "Twelve Thousand Three Hundred Forty Five"
+     * 1234567 -> "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
+     *
+     * @param num
+     * @return
+     */
+    public String numberToWords(int num) {
+        String words = "";
+        if (num == 0) {
+            return "Zero";
+        } else if (num < 100) {
+            words = toLessHundred(num);
+        } else if (num < 1000) {
+            words = toLessThousand(num);
+        } else if (num < 1000000) {
+            words = toLessMillon(num);
+        } else if (num < 1000000000) {
+            words = toLessBillon(num);
+        } else if (num < Math.pow(2, 31)) {
+            words = toLessMax(num);
+        }
+        return words.trim();
+    }
+
+    private String toLessHundred(int num) {
+        if (num < 20) {
+            return numberCase(num);
+        }
+        return (numberCase(num / 10 * 10) + " " + numberCase(num % 10)).trim();
+    }
+
+    public String toLessThousand(int num) {
+        if (num == 0) return "";
+        if (num < 100)
+            return toLessHundred(num % 100);
+        return (numberCase(num / 100) + " Hundred " + toLessHundred(num % 100)).trim();
+    }
+
+    public String toLessMillon(int num) {
+        if (num == 0) return "";
+        if (num < 1000)
+            return toLessThousand(num % 1000);
+        return (toLessThousand(num / 1000) + " Thousand " + toLessThousand(num % 1000)).trim();
+    }
+
+    public String toLessBillon(int num) {
+        if (num == 0) return "";
+        if (num < 1000000)
+            return toLessMillon(num % 1000000);
+        return (toLessThousand(num / 1000000) + " Million " + toLessMillon(num % 1000000)).trim();
+    }
+
+    public String toLessMax(int num) {
+        if (num < 1000000000)
+            return toLessBillon(num % 1000000000);
+        return toLessHundred(num / 1000000000) + " Billion " + toLessBillon(num % 1000000000).trim();
+    }
+
+    private String numberCase(int num) {
+        switch (num) {
+            case 1:
+                return "One";
+            case 2:
+                return "Two";
+            case 3:
+                return "Three";
+            case 4:
+                return "Four";
+            case 5:
+                return "Five";
+            case 6:
+                return "Six";
+            case 7:
+                return "Seven";
+            case 8:
+                return "Eight";
+            case 9:
+                return "Nine";
+            case 10:
+                return "Ten";
+            case 11:
+                return "Eleven";
+            case 12:
+                return "Twelve";
+            case 13:
+                return "Thirteen";
+            case 14:
+                return "Fourteen";
+            case 15:
+                return "Fifteen";
+            case 16:
+                return "Sixteen";
+            case 17:
+                return "Seventeen";
+            case 18:
+                return "Eighteen";
+            case 19:
+                return "Nineteen";
+            case 20:
+                return "Twenty";
+            case 30:
+                return "Thirty";
+            case 40:
+                return "Forty";
+            case 50:
+                return "Fifty";
+            case 60:
+                return "Sixty";
+            case 70:
+                return "Seventy";
+            case 80:
+                return "Eighty";
+            case 90:
+                return "Ninety";
+            default:
+                return "";
+        }
+    }
+
+    /**
+     * no.85 https://leetcode.com/problems/maximal-rectangle/
+     * Given a 2D binary matrix filled with 0's and 1's, find the largest rectangle containing all ones and return its area.
+     *
+     * @param matrix
+     * @return
+     */
+    public int maximalRectangle(char[][] matrix) {
+        if (null == matrix || matrix.length == 0 || matrix[0].length == 0) {
+            return 0;
+        }
+        int[] height = new int[matrix[0].length];
+        for (int i = 0; i < matrix[0].length; i++) {
+            if (matrix[0][i] == '1') {
+                height[i] = 1;
+            }
+        }
+        int result = largestInLine(height);
+        for (int i = 1; i < matrix.length; i++) {
+            resetHeight(matrix, height, i);
+            result = Math.max(result, largestInLine(height));
+        }
+        return result;
+    }
+
+    private int largestInLine(int[] height) {
+        if (null == height || height.length < 1) {
+            return 0;
+        }
+        int[] stack = new int[height.length + 1];
+        int len = 0, max = 0;
+        for (int i = 0; i <= height.length; i++) {
+            int h = (i == height.length) ? 0 : height[i];
+            while (len != 0 && (i == height.length || height[stack[len - 1]] > h)) {
+                if (len == 1) {
+                    max = Math.max(height[stack[--len]] * i, max);
+                } else {
+                    max = Math.max(height[stack[--len]] * (i - stack[len - 1] - 1), max);
+                }
+            }
+            stack[len++] = i;
+        }
+        return max;
+    }
+
+    private void resetHeight(char[][] matrix, int[] height, int idx) {
+        for (int i = 0; i < matrix[0].length; i++) {
+            if (matrix[idx][i] == '1') {
+                height[i] += 1;
+            } else {
+                height[i] = 0;
+            }
+        }
+    }
+
+    /**
+     * no.321 https://leetcode.com/problems/create-maximum-number/
+     *
+     * @param nums1
+     * @param nums2
+     * @param k
+     * @return
+     */
+    public int[] maxNumber(int[] nums1, int[] nums2, int k) {
+        int[][] v1 = new int[k + 1][];
+        int[][] v2 = new int[k + 1][];
+        int k1 = Math.min(k, nums1.length);
+        int k2 = Math.min(k, nums2.length);
+        v1[k1] = bestPick(nums1, k1);
+        v2[k2] = bestPick(nums2, k2);
+        if (nums1.length + nums2.length > k) {
+            for (int i = k1; i > 0; i--) v1[i - 1] = trim(v1[i], i);
+            for (int i = k2; i > 0; i--) v2[i - 1] = trim(v2[i], i);
+        }
+        int[] merged = null;
+        for (int i = 0; i <= k; i++) {
+            if (v1[i] == null || v2[k - i] == null) continue;
+            merged = merge(v1[i], i, v2[k - i], k - i, merged);
+        }
+        return merged;
+    }
+
+    int[] merge(int[] in1, int len1, int[] in2, int len2, int[] prev) {
+        int[] merged = new int[len1 + len2];
+        int i1 = 0, i2 = 0, cur = 0;
+        while (i1 < len1 && i2 < len2) {
+            if (in1[i1] > in2[i2]) merged[cur++] = in1[i1++];
+            else if (in1[i1] < in2[i2]) merged[cur++] = in2[i2++];
+            else {
+                int ii1 = i1, ii2 = i2;
+                while (in1[ii1] == in2[ii2]) {
+                    if (ii1 < len1 - 1) ii1++;
+                    if (ii2 < len2 - 1) ii2++;
+                    if (ii1 == len1 - 1 && ii2 == len2 - 1) break;
+                }
+                if (in1[ii1] > in2[ii2]) merged[cur++] = in1[i1++];
+                else if (in2[ii2] > in1[ii1]) merged[cur++] = in2[i2++];
+                else merged[cur++] = in2[i2++];
+            }
+            if (prev != null) {
+                if (merged[cur - 1] < prev[cur - 1]) return prev;
+                if (merged[cur - 1] > prev[cur - 1]) prev = null;
+            }
+        }
+        if (i1 == len1) {
+            while (i2 < len2) {
+                merged[cur++] = in2[i2++];
+                if (prev != null) {
+                    if (merged[cur - 1] < prev[cur - 1]) return prev;
+                    if (merged[cur - 1] > prev[cur - 1]) prev = null;
+                }
+            }
+        } else {
+            while (i1 < len1) {
+                merged[cur++] = in1[i1++];
+                if (prev != null) {
+                    if (merged[cur - 1] < prev[cur - 1]) return prev;
+                    if (merged[cur - 1] > prev[cur - 1]) prev = null;
+                }
+            }
+        }
+        return merged;
+    }
+
+    int[] trim(int[] in, int k) {
+        if (k == 1) return new int[0];
+        int[] out = new int[k - 1];
+        int j = 0;
+        for (int i = 0; i < k; i++) {
+            if (i == j && (i == k - 1 || in[i] < in[i + 1])) continue;
+            out[j++] = in[i];
+        }
+        return out;
+    }
+
+    int[] bestPick(int[] in, int k) {
+        if (k == 0) return new int[0];
+        int[] stack = new int[Math.max(k, in.length)];
+        int cur = 1;
+        stack[0] = in[0];
+        for (int i = 1; i < in.length; i++) {
+            while (cur > 0 && in[i] > stack[cur - 1] && in.length - i > k - cur) cur--;
+            stack[cur++] = in[i];
+        }
+        return stack;
+    }
 }
