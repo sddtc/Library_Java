@@ -16,6 +16,7 @@ public class Test {
 
     private Solutions solutions = new Solutions();
     private FastSolutions fastSolutions = new FastSolutions();
+    private sddtc.library.java.medium.Solutions mediumSoulutions = new sddtc.library.java.medium.Solutions();
 
     @org.junit.Test
     public void maxPoints() {
@@ -270,4 +271,9 @@ public class Test {
         System.out.println(solutions.numberToWords(num3));
     }
 
+    @org.junit.Test
+    public void isPerfectSquare() {
+        int num = 16;
+        System.out.println(mediumSoulutions.isPerfectSquare(num));
+    }
 }
