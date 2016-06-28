@@ -1310,4 +1310,46 @@ public class Solutions {
         }
         return stack;
     }
+
+    /**
+     * no.239 https://leetcode.com/problems/sliding-window-maximum/
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if (nums.length == 0) {
+            return new int[0];
+        }
+        int max = Integer.MIN_VALUE;
+        int maxIndex = -1;
+        int[] result = new int[nums.length - k + 1];
+        for (int i = 0; i < k; i++) {
+            if (max < nums[i]) {
+                max = nums[i];
+                maxIndex = -1;
+            }
+        }
+        result[0] = max;
+        for (int i = 1; i < nums.length - k + 1; i++) {
+            if (max < nums[i + k - 1]) {
+                max = nums[i + k - 1];
+                maxIndex = i + k - 1;
+            }
+            if (maxIndex < i) {
+                max = Integer.MIN_VALUE;
+                maxIndex = -1;
+                for (int j = 0; j < k; j++) {
+                    if (max < nums[i + j]) {
+                        max = nums[i + j];
+                        maxIndex = i + j;
+                    }
+                }
+            }
+            result[i] = max;
+        }
+
+        return result;
+    }
 }

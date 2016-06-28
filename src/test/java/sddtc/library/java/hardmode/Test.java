@@ -276,4 +276,14 @@ public class Test {
         int num = 16;
         System.out.println(mediumSoulutions.isPerfectSquare(num));
     }
+
+    @org.junit.Test
+    public void maxSlidingWindow() {
+//        int[] nums = {1, 3, -1, -3, 5, 3, 6, 7};
+        int[] nums = {-7, -8, 7, 5, 7, 1, 6, 0};
+        int[] result = solutions.maxSlidingWindow(nums, 4);
+        for (int i = 0; i < result.length; i++) {
+            System.out.print(result[i]);
+        }
+    }
 }
