@@ -16,7 +16,8 @@ public class Test {
 
     private Solutions solutions = new Solutions();
     private FastSolutions fastSolutions = new FastSolutions();
-    private sddtc.library.java.medium.Solutions mediumSoulutions = new sddtc.library.java.medium.Solutions();
+    private sddtc.library.java.medium.Solutions mediumSolutions = new sddtc.library.java.medium.Solutions();
+    private sddtc.library.java.easymode.Solutions easySolutions = new sddtc.library.java.easymode.Solutions();
 
     @org.junit.Test
     public void maxPoints() {
@@ -274,7 +275,7 @@ public class Test {
     @org.junit.Test
     public void isPerfectSquare() {
         int num = 16;
-        System.out.println(mediumSoulutions.isPerfectSquare(num));
+        System.out.println(mediumSolutions.isPerfectSquare(num));
     }
 
     @org.junit.Test
@@ -285,5 +286,17 @@ public class Test {
         for (int i = 0; i < result.length; i++) {
             System.out.print(result[i]);
         }
+    }
+
+    @org.junit.Test
+    public void powerOfTwo() {
+        int n = 1;
+        System.out.println(easySolutions.isPowerOfTwo(n));
+    }
+
+    @org.junit.Test
+    public void powerOfThree() {
+        int n = 6;
+        System.out.println(easySolutions.isPowerOfThree(n));
     }
 }
