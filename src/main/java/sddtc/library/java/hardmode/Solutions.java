@@ -1386,4 +1386,38 @@ public class Solutions {
         }
         return -1;
     }
+
+    /**
+     * no.224 https://leetcode.com/problems/basic-calculator/
+     *
+     * @param s
+     * @return
+     */
+    public int calculate(String s) {
+        int sign = 1;
+        int result = 0;
+        Stack<Integer> value = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isDigit(s.charAt(i))) {
+                int sum = s.charAt(i) - '0';
+                while (i + 1 < s.length() && Character.isDigit(s.charAt(i + 1))) {
+                    sum = sum * 10 + s.charAt(i + 1) - '0';
+                    i++;
+                }
+                result += sum * sign;
+            } else if (s.charAt(i) == '+') {
+                sign = 1;
+            } else if (s.charAt(i) == '-') {
+                sign = -1;
+            } else if (s.charAt(i) == '(') {
+                value.push(result);
+                value.push(sign);
+                result = 0;
+                sign = 1;
+            } else if (s.charAt(i) == ')') {
+                result = result * value.pop() + value.pop();
+            }
+        }
+        return result;
+    }
 }

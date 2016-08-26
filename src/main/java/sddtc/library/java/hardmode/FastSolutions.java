@@ -65,95 +65,148 @@ public class FastSolutions {
      * @return
      */
     public List<int[]> getSkyline(int[][] buildings) {
-        List<int[]> re=new ArrayList<>();
-        if(buildings.length==0)
+        List<int[]> re = new ArrayList<>();
+        if (buildings.length == 0)
             return re;
-        int[] temp=new int[2];
-        temp[0]=Integer.MIN_VALUE;
-        temp[1]=0;
+        int[] temp = new int[2];
+        temp[0] = Integer.MIN_VALUE;
+        temp[1] = 0;
         re.add(temp);
-        int StartIndex=0;
-        for(int i=0;i<buildings.length;i++){
-            int buildingLeft=buildings[i][0];
-            int buildingRight=buildings[i][1];
-            int buildingHeight=buildings[i][2];
-            int index=findIndex(buildingLeft,re,StartIndex,re.size()-1);
-            StartIndex=update(re,index,buildingLeft,buildingRight,buildingHeight);
+        int StartIndex = 0;
+        for (int i = 0; i < buildings.length; i++) {
+            int buildingLeft = buildings[i][0];
+            int buildingRight = buildings[i][1];
+            int buildingHeight = buildings[i][2];
+            int index = findIndex(buildingLeft, re, StartIndex, re.size() - 1);
+            StartIndex = update(re, index, buildingLeft, buildingRight, buildingHeight);
         }
         re.remove(0);
         return re;
     }
-    private int findIndex(int buildingLeft,List<int[]> re,int StartIndex,int EndIndex){
+
+    private int findIndex(int buildingLeft, List<int[]> re, int StartIndex, int EndIndex) {
         int mid;
-        while(StartIndex<=EndIndex){
-            mid=(StartIndex+EndIndex)/2;
-            if(re.get(mid)[0]==buildingLeft){
+        while (StartIndex <= EndIndex) {
+            mid = (StartIndex + EndIndex) / 2;
+            if (re.get(mid)[0] == buildingLeft) {
                 return mid;
-            }
-            else {
-                if(re.get(mid)[0]<buildingLeft){
-                    StartIndex=mid+1;
-                }
-                else{
-                    EndIndex=mid-1;
+            } else {
+                if (re.get(mid)[0] < buildingLeft) {
+                    StartIndex = mid + 1;
+                } else {
+                    EndIndex = mid - 1;
                 }
             }
         }
-        return StartIndex-1;
+        return StartIndex - 1;
     }
-    private int update(List<int[]> re,int index,long buildingLeft,int buildingRight,int buildingHeight){
 
-        int newStart=index;
+    private int update(List<int[]> re, int index, long buildingLeft, int buildingRight, int buildingHeight) {
+        int newStart = index;
 
-        for(int i=index;i<re.size();i++){
-            if(i>0&&re.get(i)[1]==re.get(i-1)[1]){
+        for (int i = index; i < re.size(); i++) {
+            if (i > 0 && re.get(i)[1] == re.get(i - 1)[1]) {
                 re.remove(i);
                 i--;
                 continue;
             }
-            long thisEnd=(i==re.size()-1)?Long.MAX_VALUE:re.get(i+1)[0];
-            int thisHeight=re.get(i)[1];
-            if(buildingLeft>re.get(i)[0]){
-                if(buildingHeight>re.get(i)[1]){
-                    int[] temp=new int[2];
-                    temp[0]=(int)buildingLeft;
-                    temp[1]=buildingHeight;
-                    re.add(i+1,temp);
-                    newStart=i+1;
+            long thisEnd = (i == re.size() - 1) ? Long.MAX_VALUE : re.get(i + 1)[0];
+            int thisHeight = re.get(i)[1];
+            if (buildingLeft > re.get(i)[0]) {
+                if (buildingHeight > re.get(i)[1]) {
+                    int[] temp = new int[2];
+                    temp[0] = (int) buildingLeft;
+                    temp[1] = buildingHeight;
+                    re.add(i + 1, temp);
+                    newStart = i + 1;
                     i++;
                 }
-            }
-            else{
-                if(buildingHeight>re.get(i)[1]){
-                    re.get(i)[1]=buildingHeight;
-                    if(i>0&&re.get(i-1)[1]==buildingHeight){
+            } else {
+                if (buildingHeight > re.get(i)[1]) {
+                    re.get(i)[1] = buildingHeight;
+                    if (i > 0 && re.get(i - 1)[1] == buildingHeight) {
                         re.remove(i);
-                        if(newStart==i)
+                        if (newStart == i)
                             newStart--;
                         i--;
                     }
                 }
             }
 
-            if(buildingRight<thisEnd){
-                if(buildingHeight>thisHeight){
-                    int[] temp=new int[2];
-                    temp[0]=buildingRight;
-                    temp[1]=thisHeight;
-                    re.add(i+1,temp);
+            if (buildingRight < thisEnd) {
+                if (buildingHeight > thisHeight) {
+                    int[] temp = new int[2];
+                    temp[0] = buildingRight;
+                    temp[1] = thisHeight;
+                    re.add(i + 1, temp);
                     i++;
                 }
                 break;
-            }
-            else{
-                if(buildingRight==thisEnd){
+            } else {
+                if (buildingRight == thisEnd) {
                     break;
-                }
-                else{
-                    buildingLeft=thisEnd;
+                } else {
+                    buildingLeft = thisEnd;
                 }
             }
         }
         return newStart;
+    }
+
+    /**
+     * no.224 https://leetcode.com/problems/basic-calculator/
+     * operation:
+     * 1:+
+     * -1:-
+     *
+     * @param s
+     * @return
+     */
+    public int calculate(String s) {
+        if (null == s || s.equals("")) {
+            return 0;
+        }
+        s = "(" + s + ")";
+        int[] p = {0};
+        return eval(s, p);
+    }
+
+    private int eval(String s, int[] p) {
+        int value = 0;
+        int i = p[0];
+        int operation = 1;
+        int number = 0;
+        while (i < s.length()) {
+            char c = s.charAt(i);
+            switch (c) {
+                case '+':
+                    value = value + operation * number;
+                    number = 0;
+                    operation = 1;
+                    i++;
+                    break;
+                case '-':
+                    value = value + operation * number;
+                    number = 0;
+                    operation = -1;
+                    i++;
+                    break;
+                case '(':
+                    p[0] = i + 1;
+                    value = value + operation * eval(s, p);
+                    i = p[0];
+                    break;
+                case ')':
+                    p[0] = i + 1;
+                    return value + operation * number;
+                case ' ':
+                    i++;
+                    continue;
+                default:
+                    number = number * 10 + c - '0';
+                    i++;
+            }
+        }
+        return value;
     }
 }
