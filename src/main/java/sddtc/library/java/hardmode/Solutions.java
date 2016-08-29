@@ -1420,4 +1420,52 @@ public class Solutions {
         }
         return result;
     }
+
+    /**
+     * no.282 https://leetcode.com/problems/expression-add-operators/
+     * Given a string that contains only digits 0-9 and a target value,
+     * return all possibilities to add binary operators (not unary) +, -, or *
+     * between the digits so they evaluate to the target value.
+     *
+     * @param num
+     * @param target
+     * @return
+     */
+    public List<String> addOperators(String num, int target) {
+        if (null == num || num.equals("")) {
+            return Collections.EMPTY_LIST;
+        }
+        List<String> result = new ArrayList<>();
+        StringBuilder stringBuilder = new StringBuilder();
+        numberWithOperators(result, stringBuilder, num.toCharArray(), 0, target, 0, 0);
+        return result;
+    }
+
+    private void numberWithOperators(List<String> result, StringBuilder stringBuilder, char[] num, int position, int target, long prev, long multi) {
+        if (position == num.length) {
+            if (target == prev) {
+                result.add(stringBuilder.toString());
+            }
+            return;
+        }
+        long curr = 0;
+        for (int i = position; i < num.length; i++) {
+            if (num[position] == '0' && i != position) {
+                break;
+            }
+            curr = 10 * curr + num[i] - '0';
+            int len = stringBuilder.length();
+            if (0 == position) {
+                numberWithOperators(result, stringBuilder.append(curr), num, i + 1, target, curr, curr);
+                stringBuilder.setLength(len);
+            } else {
+                numberWithOperators(result, stringBuilder.append("+").append(curr), num, i + 1, target, prev + curr, curr);
+                stringBuilder.setLength(len);
+                numberWithOperators(result, stringBuilder.append("-").append(curr), num, i + 1, target, prev - curr, -curr);
+                stringBuilder.setLength(len);
+                numberWithOperators(result, stringBuilder.append("*").append(curr), num, i + 1, target, prev - multi + multi * curr, multi * curr);
+                stringBuilder.setLength(len);
+            }
+        }
+    }
 }
