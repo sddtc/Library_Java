@@ -1468,4 +1468,30 @@ public class Solutions {
             }
         }
     }
+
+    /**
+     * no.115 https://leetcode.com/problems/distinct-subsequences/
+     *
+     * @param s
+     * @param t
+     * @return
+     */
+    public int numDistinct(String s, String t) {
+        int sLength = s.length();
+        int tLength = t.length();
+        int[][] dp = new int[tLength + 1][sLength + 1];
+        for (int i = 0; i <= sLength; i++) {
+            dp[0][i] = 1;
+        }
+        for (int j = 1; j <= tLength; j++) {
+            for (int m = 1; m <= sLength; m++) {
+                if (t.charAt(j - 1) != s.charAt(m - 1)) {
+                    dp[j][m] = dp[j][m - 1];
+                } else {
+                    dp[j][m] = dp[j][m - 1] + dp[j - 1][m - 1];
+                }
+            }
+        }
+        return dp[tLength][sLength];
+    }
 }
