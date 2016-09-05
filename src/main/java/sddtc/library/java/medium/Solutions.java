@@ -2,6 +2,10 @@ package sddtc.library.java.medium;
 
 import sddtc.library.java.object.ListNode;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by sddtc on 16/6/26.
  */
@@ -47,5 +51,55 @@ public class Solutions {
             }
         }
         return null;
+    }
+
+    /**
+     * no.18 https://leetcode.com/problems/4sum/
+     * For example, given array S = [1, 0, -1, 0, -2, 2], and target = 0.
+     * A solution set is:
+     * [
+     * [-1,  0, 0, 1],
+     * [-2, -1, 1, 2],
+     * [-2,  0, 0, 2]
+     * ]
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> list = new ArrayList();
+        List<Integer> l;
+        Arrays.sort(nums);
+        int len = nums.length;
+        for(int i = 0; i < len - 3; i++){
+            if(i != 0 && nums[i] == nums[i-1]) continue;
+            if(nums[i] + nums[i+1] + nums[i+2] + nums[i+3] > target) break;
+            if(nums[i] + nums[len-1] + nums[len-2] + nums[len-2] < target) continue;
+            for(int j = i+ 1; j < len - 2; j++){
+                if(j != i+1 && nums[j] == nums[j-1]) continue;
+                if(nums[i] + nums[j] + nums[j+1] + nums[j+2] > target) break;
+                if(nums[i] + nums[j] + nums[len-1] + nums[len-2] < target) continue;
+                int head = j+1, end = len - 1;
+                while(head < end){
+                    int tempt = nums[i] + nums[j] + nums[head] + nums[end];
+                    if(tempt == target){
+                        l = new ArrayList();
+                        l.add(nums[i]);
+                        l.add(nums[j]);
+                        l.add(nums[head]);
+                        l.add(nums[end]);
+                        list.add(l);
+                        head++;
+                        while(head < end && nums[head] == nums[head-1]){
+                            head++;
+                        }
+                    }
+                    else if(tempt > target) end--;
+                    else head++;
+                }
+            }
+        }
+        return list;
     }
 }
