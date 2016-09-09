@@ -299,4 +299,12 @@ public class Test {
         int n = 6;
         System.out.println(easySolutions.isPowerOfThree(n));
     }
+
+    @org.junit.Test
+    public void numberOfString() {
+        String s = "12";
+//        s = "03421";
+//        s = "1221304";
+        System.out.println(mediumSolutions.numDecodings(s));
+    }
 }

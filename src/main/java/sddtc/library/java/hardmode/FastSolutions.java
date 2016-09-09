@@ -209,4 +209,26 @@ public class FastSolutions {
         }
         return value;
     }
+
+    /**
+     * no.91 https://leetcode.com/problems/decode-ways/
+     *
+     * @param s
+     * @return
+     */
+    public int numDecodings(String s) {
+        if (s == null || s.length() <= 0) return 0;
+        int one = 0, two = 0;
+        int[] book = new int[s.length() + 1];
+        Arrays.fill(book, 0);
+        book[0] = 1;
+        book[1] = (s.charAt(0) >= '1' && s.charAt(0) <= '9') ? 1 : 0;
+        for (int i = 1; i < s.length(); i++) {
+            one = (s.charAt(i) - '0');
+            two = (s.charAt(i - 1) - '0') * 10 + (s.charAt(i) - '0');
+            if (one >= 1 && one <= 9) book[i + 1] += book[i];
+            if (two >= 10 && two <= 26) book[i + 1] += book[i - 1];
+        }
+        return book[book.length - 1];
+    }
 }

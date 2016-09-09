@@ -72,18 +72,18 @@ public class Solutions {
         List<Integer> l;
         Arrays.sort(nums);
         int len = nums.length;
-        for(int i = 0; i < len - 3; i++){
-            if(i != 0 && nums[i] == nums[i-1]) continue;
-            if(nums[i] + nums[i+1] + nums[i+2] + nums[i+3] > target) break;
-            if(nums[i] + nums[len-1] + nums[len-2] + nums[len-2] < target) continue;
-            for(int j = i+ 1; j < len - 2; j++){
-                if(j != i+1 && nums[j] == nums[j-1]) continue;
-                if(nums[i] + nums[j] + nums[j+1] + nums[j+2] > target) break;
-                if(nums[i] + nums[j] + nums[len-1] + nums[len-2] < target) continue;
-                int head = j+1, end = len - 1;
-                while(head < end){
+        for (int i = 0; i < len - 3; i++) {
+            if (i != 0 && nums[i] == nums[i - 1]) continue;
+            if (nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3] > target) break;
+            if (nums[i] + nums[len - 1] + nums[len - 2] + nums[len - 2] < target) continue;
+            for (int j = i + 1; j < len - 2; j++) {
+                if (j != i + 1 && nums[j] == nums[j - 1]) continue;
+                if (nums[i] + nums[j] + nums[j + 1] + nums[j + 2] > target) break;
+                if (nums[i] + nums[j] + nums[len - 1] + nums[len - 2] < target) continue;
+                int head = j + 1, end = len - 1;
+                while (head < end) {
                     int tempt = nums[i] + nums[j] + nums[head] + nums[end];
-                    if(tempt == target){
+                    if (tempt == target) {
                         l = new ArrayList();
                         l.add(nums[i]);
                         l.add(nums[j]);
@@ -91,15 +91,41 @@ public class Solutions {
                         l.add(nums[end]);
                         list.add(l);
                         head++;
-                        while(head < end && nums[head] == nums[head-1]){
+                        while (head < end && nums[head] == nums[head - 1]) {
                             head++;
                         }
-                    }
-                    else if(tempt > target) end--;
+                    } else if (tempt > target) end--;
                     else head++;
                 }
             }
         }
         return list;
+    }
+
+    /**
+     * no.91 https://leetcode.com/problems/decode-ways/
+     *
+     * @param s
+     * @return
+     */
+    public int numDecodings(String s) {
+        if (null == s || s.length() == 0) {
+            return 0;
+        }
+        int length = s.length();
+        int[] dp = new int[length + 1];
+        dp[0] = 1;
+        dp[1] = s.charAt(0) != '0' ? 1 : 0;
+        for (int i = 2; i <= length; i++) {
+            int first = s.charAt(i - 1) - '0';
+            int second = (s.charAt(i - 2) - '0') * 10 + (s.charAt(i - 1) - '0');
+            if (first >= 1 && first <= 9) {
+                dp[i] += dp[i - 1];
+            }
+            if (second >= 10 && second <= 26) {
+                dp[i] += dp[i - 2];
+            }
+        }
+        return dp[length];
     }
 }
