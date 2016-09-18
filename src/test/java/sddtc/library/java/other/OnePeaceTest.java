@@ -10,9 +10,34 @@ public class OnePeaceTest {
     Stack<Integer> items = new Stack<Integer>();
     static final int ITEMS_COUNT = 10;
 
+    public static void main(String args[]) {
+        OnePeaceTest pc = new OnePeaceTest();
+        Thread t1 = new Thread(pc.new Product());
+        Consumer consumer  = pc.new Consumer();
+        Thread t2 = new Thread(consumer);
+        Thread t3 = new Thread(consumer);
+        Thread t4 = new Thread(consumer);
+        t1.start();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+        t2.start();
+        t3.start();
+        t4.start();
+        try {
+            t2.join();
+            t3.join();
+            t4.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     class Product implements Runnable {
         public void product(int i) {
-            System.out.println("product: " + i);
+            System.out.println(Thread.currentThread().getId() + " product: " + i);
             items.push(i);
         }
 
@@ -39,7 +64,7 @@ public class OnePeaceTest {
         public void consume() {
             if (!items.isEmpty()) {
                 consumed.incrementAndGet();
-                System.out.println("consumed: " + items.pop());
+                System.out.println(Thread.currentThread().getId() + " consumed get : " + consumed.get() + " ; " + "consumed: " + items.pop());
             }
         }
 
@@ -53,6 +78,7 @@ public class OnePeaceTest {
                     while (items.isEmpty() && !isEnd()) {
                         try {
                             items.wait(10);
+                            System.out.println(Thread.currentThread().getId() +" wait ");
                         } catch (InterruptedException e) {
                             Thread.interrupted();
                         }
@@ -60,6 +86,7 @@ public class OnePeaceTest {
                     consume();
                 }
             }
+            System.out.println(Thread.currentThread().getId() +"----" + consumed.get());
         }
     }
 }

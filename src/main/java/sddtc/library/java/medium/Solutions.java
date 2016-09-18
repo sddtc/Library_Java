@@ -1,6 +1,7 @@
 package sddtc.library.java.medium;
 
 import sddtc.library.java.object.ListNode;
+import sddtc.library.java.object.TreeNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -127,5 +128,52 @@ public class Solutions {
             }
         }
         return dp[length];
+    }
+
+    public TreeNode sortedListToBST(ListNode head) {
+        if (null == head) return null;
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode prev = null;
+
+        while (null != fast.next) {
+            fast = fast.next;
+            if (null == fast.next) {
+                break;
+            }
+
+            fast = fast.next;
+            prev = slow;
+            slow = slow.next;
+        }
+        if (null != prev) {
+            prev.next = null;
+        } else {
+            head = null;
+        }
+
+        TreeNode root = new TreeNode(slow.val);
+        root.left = sortedListToBST(head);
+        root.right = sortedListToBST(slow.next);
+
+        return root;
+    }
+
+    /**
+     * no.114 https://leetcode.com/problems/flatten-binary-tree-to-linked-list/
+     *
+     * @param root
+     */
+    private TreeNode prev = null;
+
+    public void flatten(TreeNode root) {
+        if (null == root) {
+            return;
+        }
+        flatten(root.right);
+        flatten(root.left);
+        root.right = prev;
+        root.left = null;
+        prev = root;
     }
 }
