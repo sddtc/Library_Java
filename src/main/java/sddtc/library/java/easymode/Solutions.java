@@ -1,5 +1,7 @@
 package sddtc.library.java.easymode;
 
+import sddtc.library.java.object.TreeNode;
+
 /**
  * Created by sddtc on 16/5/17.
  */
@@ -57,5 +59,25 @@ public class Solutions {
             }
         }
         return num == 1;
+    }
+
+    /**
+     * invert binary tree
+     * @param root
+     * @return
+     */
+    public TreeNode invertTree(TreeNode root) {
+        if (null == root) {
+            return null;
+        }
+
+        root.left = invertTree(root.left);
+        root.right = invertTree(root.right);
+
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+
+        return root;
     }
 }
