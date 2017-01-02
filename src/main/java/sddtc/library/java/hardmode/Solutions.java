@@ -1494,4 +1494,49 @@ public class Solutions {
         }
         return dp[tLength][sLength];
     }
+
+    /**
+     * no.329 https://leetcode.com/problems/longest-increasing-path-in-a-matrix/
+     *
+     * @param matrix
+     * @return
+     */
+    public int longestIncreasingPath(int[][] matrix) {
+        int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        if(matrix.length == 0) return 0;
+        int m = matrix.length, n = matrix[0].length;
+        int[][] cache = new int[m][n];
+        int max = 1;
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                int len = dfsWithLongestIncreasingPath(matrix, cache, dirs,  i, j);
+                max = Math.max(max, len);
+            }
+        }
+        return max;
+    }
+
+    /**
+     *
+     * @param matrix
+     * @param cache
+     * @param dirs
+     * @param i
+     * @param j
+     * @return
+     */
+    private int dfsWithLongestIncreasingPath(int[][] matrix, int[][] cache, int[][] dirs, int i, int j) {
+        if(cache[i][j] != 0) return cache[i][j];
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int max = 1;
+        for(int[] dir: dirs) {
+            int x = i + dir[0], y = j + dir[1];
+            if(x < 0 || x >= m || y < 0 || y >= n || matrix[x][y] <= matrix[i][j]) continue;
+            int len = 1 + dfsWithLongestIncreasingPath(matrix, cache, dirs, x, y);
+            max = Math.max(max, len);
+        }
+        cache[i][j] = max;
+        return max;
+    }
 }
