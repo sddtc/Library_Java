@@ -1,0 +1,1 @@
+[solutions of dojo project](git@github.com:sddtc/dojo.git)

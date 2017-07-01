@@ -10,9 +10,18 @@
 
     <properties>
         <junit>4.10</junit>
+        <stefanbirknerb>1.2.0</stefanbirknerb>
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.github.stefanbirkner/system-rules -->
+        <dependency>
+            <groupId>com.github.stefanbirkner</groupId>
+            <artifactId>system-rules</artifactId>
+            <version>${stefanbirknerb}</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -20,4 +29,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
 </project>
