@@ -3,37 +3,40 @@ package sddtc.library.java.io;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 
-/**
- * Author sddtc
- * Date 16/8/12
- */
 public class FileIOTest {
-    final static String filePath = "/sddtc/sddtc.mp4";
-    final static String des1 = "/sddtc/sddtc.mp4.copy";
-    final static String des2 = "/sddtc/sddtc.mp4.copy2";
-    final static String des3 = "/sddtc/sddtc.mp4.copy3";
+    final static String filePath = "src/test/resources/15. CITY OF BLINDING LIGHT.mp3";
+    final static String des1 = "src/test/resources/15. CITY OF BLINDING LIGHT.mp3.copy";
+    final static String des2 = "src/test/resources/15. CITY OF BLINDING LIGHT.mp3.copy2";
+    final static String des3 = "src/test/resources/15. CITY OF BLINDING LIGHT.mp3.copy3";
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
         for (int i = 0; i < 8; i++) {
             baseCopy(filePath, des1);
         }
-        System.out.println(System.currentTimeMillis() - start);
+        System.out.println("base copy: ");
+        System.out.println((System.currentTimeMillis() - start) + "ms");
 
         long start2 = System.currentTimeMillis();
         for (int i = 0; i < 8; i++) {
-            baseCopy(filePath, des2);
+            nioBaseCopy(filePath, des2);
         }
-        System.out.println(System.currentTimeMillis() - start2);
+        System.out.println("nio base copy: ");
+        System.out.println((System.currentTimeMillis() - start2) + "ms");
 
         long start3 = System.currentTimeMillis();
         for (int i = 0; i < 8; i++) {
-            baseCopy(filePath, des3);
+            nioCopy(filePath, des3);
         }
-        System.out.println(System.currentTimeMillis() - start3);
+        System.out.println("nio copy: ");
+        System.out.println((System.currentTimeMillis() - start3) + "ms");
+
+        deleteCopyFiles();
     }
 
     private static void baseCopy(String filePath, String des) {
@@ -66,7 +69,7 @@ public class FileIOTest {
         }
     }
 
-    private void nioBaseCopy(String filePath, String des) {
+    private static void nioBaseCopy(String filePath, String des) {
         FileChannel sc = null;
         FileChannel dc = null;
         try {
@@ -94,7 +97,7 @@ public class FileIOTest {
         }
     }
 
-    private void nioCopy(String filePath, String des) {
+    private static void nioCopy(String filePath, String des) {
         FileChannel sc = null;
         FileChannel dc = null;
         try {
@@ -120,6 +123,16 @@ public class FileIOTest {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+        }
+    }
+
+    private static void deleteCopyFiles() {
+        try {
+            Files.deleteIfExists(new File(des1).toPath());
+            Files.deleteIfExists(new File(des2).toPath());
+            Files.deleteIfExists(new File(des3).toPath());
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 }
