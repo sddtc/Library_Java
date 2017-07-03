@@ -3,10 +3,6 @@ package sddtc.library.java.regex;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Author tuijiang
- * Date 16/6/16
- */
 public class RegexBlockTest {
     public static void main(String[] args) throws InterruptedException {
         new LongRunningRegexExample().main(null);

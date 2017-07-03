@@ -3,9 +3,6 @@ package sddtc.library.java.other;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * Created by sddtc on 16/9/16.
- */
 public class OnePeaceTest {
     Stack<Integer> items = new Stack<Integer>();
     static final int ITEMS_COUNT = 10;
