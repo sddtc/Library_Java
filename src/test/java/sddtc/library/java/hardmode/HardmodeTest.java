@@ -5,33 +5,30 @@ import sddtc.library.java.object.Interval;
 import sddtc.library.java.object.ListNode;
 import sddtc.library.java.object.Point;
 import sddtc.library.java.object.TreeNode;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by sddtc on 16/1/20.
- */
-public class Test {
-
+public class HardmodeTest {
     private Solutions solutions = new Solutions();
     private FastSolutions fastSolutions = new FastSolutions();
     private sddtc.library.java.medium.Solutions mediumSolutions = new sddtc.library.java.medium.Solutions();
     private sddtc.library.java.easymode.Solutions easySolutions = new sddtc.library.java.easymode.Solutions();
 
-    @org.junit.Test
-    public void maxPoints() {
+    @Test
+    public void should_return_maxPoints_three() {
         Point p1 = new Point();
         Point p2 = new Point(-1, -1);
         Point p3 = new Point(-3, -3);
 
         Point[] points = {p1, p2, p3};
-        System.out.println(solutions.maxPoints(points));
+        Assert.assertEquals(3, solutions.maxPoints(points));
     }
 
 
-    @org.junit.Test
-    public void isMatch() {
+    @Test
+    public void should_return_isMatch() {
         Assert.assertTrue("1", solutions.isMatch("cabab", "*ab"));
         Assert.assertTrue("1", solutions.isMatch("a", "a*"));
         Assert.assertTrue("1", solutions.isMatch("", "*"));
@@ -44,19 +41,19 @@ public class Test {
         Assert.assertFalse("7", solutions.isMatch("aab", "c*a*b"));
     }
 
-    @org.junit.Test
-    public void minWindow() {
+    @Test
+    public void should_return_minWindow() {
         String s = "ADOBECODEBANC";
         String t = "ABC";
-        System.out.println(solutions.minWindow(s, t));
+        Assert.assertEquals("BANC", solutions.minWindow(s, t));
 
         String ss = "eeeeeeeeebadbaccb";
         String tt = "abc";
-        System.out.println(solutions.minWindow(ss, tt));
+        Assert.assertEquals("bac", solutions.minWindow(ss, tt));
     }
 
-    @org.junit.Test
-    public void isInterleave() {
+    @Test
+    public void should_return_isInterleave() {
         Assert.assertTrue(solutions.isInterleave("aabcc", "dbbca", "aadbbcbcac"));
         Assert.assertFalse(solutions.isInterleave("aabcc", "dbbca", "aadbbbaccc"));
         Assert.assertFalse(solutions.isInterleave("a", "", "aa"));
@@ -66,7 +63,8 @@ public class Test {
     }
 
 
-    @org.junit.Test
+    @Test
+    // TODO: 2017/7/3 test case 
     public void interval() {
         //demo one
         List<Interval> list = new ArrayList<>();
@@ -98,7 +96,8 @@ public class Test {
         }
     }
 
-    @org.junit.Test
+    @Test
+    // TODO: 2017/7/3 test case 
     public void mergeKLists() {
         ListNode l1 = new ListNode(1);
         l1.next = new ListNode(3);
@@ -161,7 +160,8 @@ public class Test {
 
     }
 
-    @org.junit.Test
+    @Test
+    // TODO: 2017/7/3 test case 
     public void merge() {
         //Given [1,3],[2,6],[8,10],[15,18],
         //return [1,6],[8,10],[15,18].
@@ -188,97 +188,106 @@ public class Test {
         }
     }
 
-    @org.junit.Test
-    public void isScramble() {
+    @Test
+    public void should_return_isScramble_true() {
         String s1 = "great";
         String s2 = "rgate";
 
-        System.out.println(solutions.isScramble(s1, s2));
+        Assert.assertTrue(solutions.isScramble(s1, s2));
     }
 
-    @org.junit.Test
-    public void minDistance() {
+    @Test
+    public void should_return_minDistance() {
         String one = "abc";
         String two = "bce";
 
-        int step = solutions.minDistance(one, two);
-        System.out.print(step);
+        Assert.assertEquals(2, solutions.minDistance(one, two));
     }
 
-    @org.junit.Test
-    public void simplePaths() {
+    @Test
+    public void should_return_simplePaths() {
         String p1 = "/home/";
         String p2 = "/a/./b/../../c/";
         String p3 = "///";
         String p4 = "/a/...";
 
-        System.out.println(solutions.simplifyPath(p1));
-        System.out.println(solutions.simplifyPath(p2));
-        System.out.println(solutions.simplifyPath(p3));
-        System.out.println(solutions.simplifyPath(p4));
+        Assert.assertEquals("/home", solutions.simplifyPath(p1));
+        Assert.assertEquals("/c", solutions.simplifyPath(p2));
+        Assert.assertEquals("/", solutions.simplifyPath(p3));
+        Assert.assertEquals("/a/...", solutions.simplifyPath(p4));
     }
 
-    @org.junit.Test
-    public void bitCount() {
+    @Test
+    public void should_return_bitCount() {
         int num = 5;
         int[] result = solutions.countBits(num);
+
+        Assert.assertEquals(6, result.length);
+        // TODO: 2017/7/3 test case
         for (int i = 0; i < result.length; i++) {
             System.out.print(result[i] + ",");
         }
     }
 
-    @org.junit.Test
-    public void countDigit() {
+    @Test
+    public void should_return_countDigit() {
         int n = 1410065408;
-        System.out.print(solutions.countDigitOne(n));
+
+        Assert.assertEquals(1737167499, solutions.countDigitOne(n));
     }
 
-    @org.junit.Test
-    public void removeDuplicateLetters() {
-        System.out.println((int) 'a');
-        System.out.println((char) 97);
+    @Test
+    public void should_return_removeDuplicateLetters() {
         String s1 = "bcabc";
         String s2 = "cbacdcbc";
-        System.out.println(solutions.removeDuplicateLetters(s1));
-        System.out.println(solutions.removeDuplicateLetters(s2));
+
+        Assert.assertEquals("abc", solutions.removeDuplicateLetters(s1));
+        Assert.assertEquals("acdb", solutions.removeDuplicateLetters(s2));
     }
 
-    @org.junit.Test
-    public void postorder() {
+    @Test
+    public void should_return_postorder() {
         TreeNode root = new TreeNode(1);
         TreeNode right = new TreeNode(2);
         TreeNode left = new TreeNode(3);
         root.right = right;
         right.left = left;
         List<Integer> result = solutions.postorderTraversal(root);
-        System.out.println(result);
+
+        Assert.assertEquals(3, result.size());
+        Assert.assertEquals(3, result.get(0).intValue());
+        Assert.assertEquals(2, result.get(1).intValue());
+        Assert.assertEquals(1, result.get(2).intValue());
     }
 
-    @org.junit.Test
-    public void median() {
+    @Test
+    public void should_return_median() {
         int[] n1 = {1, 2, 3};
         int[] n2 = {4};
 
-        System.out.println(solutions.findMedianSortedArrays(n1, n2));
+        Assert.assertEquals(2.5, solutions.findMedianSortedArrays(n1, n2), 0);
     }
 
-    @org.junit.Test
-    public void numberToWords() {
+    @Test
+    public void should_return_numberToWords() {
         int num1 = 123;
         int num2 = 12345;
         int num3 = 1234567;
-        System.out.println(solutions.numberToWords(num1));
-        System.out.println(solutions.numberToWords(num2));
-        System.out.println(solutions.numberToWords(num3));
+
+        Assert.assertEquals("One Hundred Twenty Three", solutions.numberToWords(num1));
+        Assert.assertEquals("Twelve Thousand Three Hundred Forty Five", solutions.numberToWords(num2));
+        Assert.assertEquals("One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven", solutions.numberToWords(num3));
     }
 
-    @org.junit.Test
-    public void isPerfectSquare() {
+    @Test
+    public void should_return_perfectSquare() {
         int num = 16;
-        System.out.println(mediumSolutions.isPerfectSquare(num));
+        
+        Assert.assertTrue(mediumSolutions.isPerfectSquare(num));
     }
 
-    @org.junit.Test
+    @Test
+    // TODO: 2017/7/3 test case
     public void maxSlidingWindow() {
 //        int[] nums = {1, 3, -1, -3, 5, 3, 6, 7};
         int[] nums = {-7, -8, 7, 5, 7, 1, 6, 0};
@@ -288,23 +297,26 @@ public class Test {
         }
     }
 
-    @org.junit.Test
-    public void powerOfTwo() {
+    @Test
+    public void should_return_powerOfTwo() {
         int n = 1;
-        System.out.println(easySolutions.isPowerOfTwo(n));
+
+        Assert.assertTrue(easySolutions.isPowerOfTwo(n));
     }
 
-    @org.junit.Test
-    public void powerOfThree() {
+    @Test
+    public void should_return_powerOfThree_false() {
         int n = 6;
-        System.out.println(easySolutions.isPowerOfThree(n));
+
+        Assert.assertFalse(easySolutions.isPowerOfThree(n));
     }
 
-    @org.junit.Test
+    @Test
     public void numberOfString() {
         String s = "12";
 //        s = "03421";
 //        s = "1221304";
+        // TODO: 2017/7/3 test case
         System.out.println(mediumSolutions.numDecodings(s));
     }
 }
