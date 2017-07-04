@@ -4,21 +4,41 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class MediummodeTest {
+
     private Solutions mediumSolutions = new Solutions();
 
     @Test
-    public void numberOfString() {
-        String s = "12";
-//        s = "03421";
-//        s = "1221304";
-        // TODO: 2017/7/3 test case
-        System.out.println(mediumSolutions.numDecodings(s));
+    public void should_return_1_by_numberOfString() {
+        String s = "98";
+
+        Assert.assertEquals(1, mediumSolutions.numDecodings(s));
     }
 
     @Test
-    public void should_return_perfectSquare() {
+    public void should_return_2_by_numberOfString() {
+        String s = "12";
+
+        Assert.assertEquals(2, mediumSolutions.numDecodings(s));
+    }
+
+    @Test
+    public void should_return_0_by_numberOfString() {
+        String s = "03421";
+
+        Assert.assertEquals(0, mediumSolutions.numDecodings(s));
+    }
+
+    @Test
+    public void should_return_perfectSquare_true() {
         int num = 16;
 
         Assert.assertTrue(mediumSolutions.isPerfectSquare(num));
+    }
+
+    @Test
+    public void should_return_perfectSquare_false() {
+        int num = 8;
+
+        Assert.assertFalse(mediumSolutions.isPerfectSquare(num));
     }
 }
