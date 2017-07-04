@@ -8,6 +8,7 @@ import sddtc.library.java.object.TreeNode;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HardmodeTest {
@@ -57,7 +58,7 @@ public class HardmodeTest {
         Assert.assertFalse(solutions.isInterleave("a", "", "aa"));
         Assert.assertFalse(solutions.isInterleave("", "", "a"));
         Assert.assertTrue(solutions.isInterleave("a", "", "a"));
-        Assert.assertFalse(solutions.isInterleave("a", "b", "aba"));
+        Assert.assertTrue(solutions.isInterleave("a", "b", "aba"));
     }
 
     @Test
@@ -95,8 +96,7 @@ public class HardmodeTest {
     }
 
     @Test
-    // TODO: 2017/7/3 test case 
-    public void mergeKLists() {
+    public void should_return_mergeKLists_six_size() {
         ListNode l1 = new ListNode(1);
         l1.next = new ListNode(3);
         ListNode l2 = new ListNode(2);
@@ -109,53 +109,64 @@ public class HardmodeTest {
         nodes[1] = l2;
         nodes[2] = l3;
 
-        ListNode result = solutions.mergeKLists(nodes);
+        ListNode listNode = solutions.mergeKLists(nodes);
 
-        while (null != result) {
-            System.out.println(result.val);
-            result = result.next;
+        int height = 0;
+        while (null != listNode) {
+            height++;
+            listNode = listNode.next;
         }
 
+        Assert.assertEquals(6, height);
+    }
 
-        ListNode[] listNode = new ListNode[1];
-        ListNode result2 = solutions.mergeKLists(listNode);
+    @Test
+    public void should_return_mergeKLists_is_zero() {
+        ListNode[] listNodes = new ListNode[2];
+        ListNode listNode = solutions.mergeKLists(listNodes);
 
-        while (null != result2) {
-            System.out.println(result2.val);
-            result2 = result2.next;
+        int height = 0;
+        while (null != listNode) {
+            height++;
+            listNode = listNode.next;
         }
 
-        ListNode[] listNode2 = new ListNode[2];
-        ListNode result3 = solutions.mergeKLists(listNode2);
+        Assert.assertEquals(0, height);
+    }
 
-        while (null != result3) {
-            System.out.println(result3.val);
-            result3 = result3.next;
+    @Test
+    public void should_return_mergeKLists_one_size() {
+        ListNode[] listNodes = new ListNode[2];
+        listNodes[0] = null;
+        listNodes[1] = new ListNode(1);
+        ListNode listNode = solutions.mergeKLists(listNodes);
+
+        int height = 0;
+        while (null != listNode) {
+            height++;
+            listNode = listNode.next;
         }
 
-        ListNode[] listNode3 = new ListNode[2];
-        listNode3[0] = null;
-        listNode3[1] = new ListNode(1);
-        ListNode result4 = solutions.mergeKLists(listNode3);
+        Assert.assertEquals(1, height);
+    }
 
-        while (null != result4) {
-            System.out.println(result4.val);
-            result4 = result4.next;
+    @Test
+    public void should_return_mergeKLists_two_size() {
+        ListNode[] listNodes = new ListNode[4];
+        listNodes[0] = null;
+        listNodes[1] = new ListNode(1);
+        listNodes[2] = null;
+        listNodes[3] = new ListNode(2);
+
+        ListNode listNode = solutions.mergeKLists(listNodes);
+
+        int height = 0;
+        while (null != listNode) {
+            height++;
+            listNode = listNode.next;
         }
 
-        ListNode[] listNode4 = new ListNode[4];
-        listNode4[0] = null;
-        listNode4[1] = new ListNode(1);
-        listNode4[2] = null;
-        listNode4[3] = new ListNode(2);
-
-        ListNode result5 = solutions.mergeKLists(listNode4);
-
-        while (null != result5) {
-            System.out.println(result5.val);
-            result5 = result5.next;
-        }
-
+        Assert.assertEquals(2, height);
     }
 
     @Test
@@ -188,15 +199,17 @@ public class HardmodeTest {
     }
 
     @Test
-    public void should_return_bitCount() {
+    public void should_return_bitCount_from_0_to_5() {
         int num = 5;
         int[] result = solutions.countBits(num);
 
         Assert.assertEquals(6, result.length);
-        // TODO: 2017/7/3 test case
-        for (int i = 0; i < result.length; i++) {
-            System.out.print(result[i] + ",");
-        }
+        Assert.assertEquals(0, result[0]);
+        Assert.assertEquals(1, result[1]);
+        Assert.assertEquals(1, result[2]);
+        Assert.assertEquals(2, result[3]);
+        Assert.assertEquals(1, result[4]);
+        Assert.assertEquals(2, result[5]);
     }
 
     @Test
@@ -250,13 +263,19 @@ public class HardmodeTest {
     }
 
     @Test
-    // TODO: 2017/7/3 test case
-    public void maxSlidingWindow() {
-//        int[] nums = {1, 3, -1, -3, 5, 3, 6, 7};
+    public void should_return_maxSlidingWindow_35567() {
+        int[] nums = {1, 3, -1, -3, 5, 3, 6, 7};
+        int[] result = solutions.maxSlidingWindow(nums, 4);
+
+        Assert.assertTrue(Arrays.equals(result, Arrays.stream(new int[]{3,5,5,6,7}).toArray()));
+    }
+
+    @Test
+    public void should_return_maxSlidingWindow_77777() {
         int[] nums = {-7, -8, 7, 5, 7, 1, 6, 0};
         int[] result = solutions.maxSlidingWindow(nums, 4);
-        for (int i = 0; i < result.length; i++) {
-            System.out.print(result[i]);
-        }
+
+        Assert.assertTrue(Arrays.equals(result, Arrays.stream(new int[]{7,7,7,7,7}).toArray()));
     }
+
 }
