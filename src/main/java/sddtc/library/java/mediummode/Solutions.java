@@ -1,4 +1,4 @@
-package sddtc.library.java.medium;
+package sddtc.library.java.mediummode;
 
 import sddtc.library.java.object.ListNode;
 import sddtc.library.java.object.TreeNode;

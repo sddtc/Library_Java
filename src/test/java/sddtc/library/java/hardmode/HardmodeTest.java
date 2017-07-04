@@ -13,7 +13,7 @@ import java.util.List;
 public class HardmodeTest {
     private Solutions solutions = new Solutions();
     private FastSolutions fastSolutions = new FastSolutions();
-    private sddtc.library.java.medium.Solutions mediumSolutions = new sddtc.library.java.medium.Solutions();
+    private sddtc.library.java.mediummode.Solutions mediumSolutions = new sddtc.library.java.mediummode.Solutions();
     private sddtc.library.java.easymode.Solutions easySolutions = new sddtc.library.java.easymode.Solutions();
 
     @Test
