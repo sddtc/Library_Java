@@ -13,8 +13,6 @@ import java.util.List;
 public class HardmodeTest {
     private Solutions solutions = new Solutions();
     private FastSolutions fastSolutions = new FastSolutions();
-    private sddtc.library.java.mediummode.Solutions mediumSolutions = new sddtc.library.java.mediummode.Solutions();
-    private sddtc.library.java.easymode.Solutions easySolutions = new sddtc.library.java.easymode.Solutions();
 
     @Test
     public void should_return_maxPoints_three() {
@@ -280,13 +278,6 @@ public class HardmodeTest {
     }
 
     @Test
-    public void should_return_perfectSquare() {
-        int num = 16;
-        
-        Assert.assertTrue(mediumSolutions.isPerfectSquare(num));
-    }
-
-    @Test
     // TODO: 2017/7/3 test case
     public void maxSlidingWindow() {
 //        int[] nums = {1, 3, -1, -3, 5, 3, 6, 7};
@@ -295,28 +286,5 @@ public class HardmodeTest {
         for (int i = 0; i < result.length; i++) {
             System.out.print(result[i]);
         }
-    }
-
-    @Test
-    public void should_return_powerOfTwo() {
-        int n = 1;
-
-        Assert.assertTrue(easySolutions.isPowerOfTwo(n));
-    }
-
-    @Test
-    public void should_return_powerOfThree_false() {
-        int n = 6;
-
-        Assert.assertFalse(easySolutions.isPowerOfThree(n));
-    }
-
-    @Test
-    public void numberOfString() {
-        String s = "12";
-//        s = "03421";
-//        s = "1221304";
-        // TODO: 2017/7/3 test case
-        System.out.println(mediumSolutions.numDecodings(s));
     }
 }
