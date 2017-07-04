@@ -60,38 +60,38 @@ public class HardmodeTest {
         Assert.assertFalse(solutions.isInterleave("a", "b", "aba"));
     }
 
-
     @Test
-    // TODO: 2017/7/3 test case 
-    public void interval() {
-        //demo one
+    /* Given [1,3],[6,9],[2,5]
+     * return [1,5],[6,9] */
+    public void should_merge_two_intervals() {
         List<Interval> list = new ArrayList<>();
         list.add(new Interval(1, 3));
         list.add(new Interval(6, 9));
         Interval newInterval = new Interval(2, 5);
         List<Interval> result = solutions.insert(list, newInterval);
 
-        for (Interval interval : result) {
-            System.out.print("[" + interval.start + "," + interval.end + "],");
-        }
+        Assert.assertEquals(new Interval(1,5), result.get(0));
+        Assert.assertEquals(new Interval(6,9), result.get(1));
+    }
 
-        System.out.println();
 
-        //demo two
-        List<Interval> list2 = new ArrayList<>();
+    @Test
+    /* Given  [1,2],[3,5],[6,7],[8,10],[12,16]
+     * return [1,2],[3,10],[12,16] */
+    public void should_merge_five_intervals_to_three_intervals() {
+        List<Interval> list = new ArrayList<>();
+        list.add(new Interval(1, 2));
+        list.add(new Interval(3, 5));
+        list.add(new Interval(6, 7));
+        list.add(new Interval(8, 10));
+        list.add(new Interval(12, 16));
 
-        list2.add(new Interval(1, 2));
-        list2.add(new Interval(3, 5));
-        list2.add(new Interval(6, 7));
-        list2.add(new Interval(8, 10));
-        list2.add(new Interval(12, 16));
+        Interval newInterval = new Interval(4, 9);
+        List<Interval> result = solutions.insert(list, newInterval);
 
-        Interval newInterval2 = new Interval(4, 9);
-        List<Interval> result2 = solutions.insert(list2, newInterval2);
-
-        for (Interval interval : result2) {
-            System.out.print("[" + interval.start + "," + interval.end + "],");
-        }
+        Assert.assertEquals(new Interval(1, 2), result.get(0));
+        Assert.assertEquals(new Interval(3, 10), result.get(1));
+        Assert.assertEquals(new Interval(12,16), result.get(2));
     }
 
     @Test
