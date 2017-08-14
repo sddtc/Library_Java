@@ -2,6 +2,8 @@ package sddtc.library.java.easymode;
 
 import sddtc.library.java.object.TreeNode;
 
+import java.util.HashSet;
+
 /**
  * Created by sddtc on 16/5/17.
  */
@@ -79,5 +81,26 @@ public class Solutions {
         root.right = temp;
 
         return root;
+    }
+
+    /**
+     * Definition for a binary tree node.
+     * public class TreeNode {
+     *     int val;
+     *     TreeNode left;
+     *     TreeNode right;
+     *     TreeNode(int x) { val = x; }
+     * }
+     */
+    public boolean findTarget(TreeNode root, int k) {
+        HashSet<Integer> set = new HashSet<>();
+        return dfsFindTarget(root, set, k);
+    }
+
+    private boolean dfsFindTarget(TreeNode root, HashSet<Integer> set, int k) {
+        if(null == root) return false;
+        if(set.contains(k - root.val)) return true;
+        set.add(root.val);
+        return dfsFindTarget(root.left, set, k) || dfsFindTarget(root.right, set, k);
     }
 }
