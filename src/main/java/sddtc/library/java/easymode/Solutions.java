@@ -84,6 +84,7 @@ public class Solutions {
     }
 
     /**
+     * Two Sum IV - Input is a BST
      * Definition for a binary tree node.
      * public class TreeNode {
      *     int val;
