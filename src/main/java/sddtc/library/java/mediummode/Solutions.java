@@ -176,4 +176,31 @@ public class Solutions {
         root.left = null;
         prev = root;
     }
+
+    /**
+     * 654. Maximum Binary Tree
+     * @param nums
+     * @return
+     */
+    public TreeNode constructMaximumBinaryTree(int[] nums) {
+        if(null == nums) return null;
+        return buildMaximumBinaryTree(nums, 0, nums.length -1);
+    }
+
+    private TreeNode buildMaximumBinaryTree(int[] nums, int start, int end) {
+        if(start > end) return null;
+
+        int max = start;
+        for(int i= start+1;i<=end;i++) {
+            if(nums[i] > nums[max]) {
+                max = i;
+            }
+        }
+
+        TreeNode root = new TreeNode(nums[max]);
+        root.left = buildMaximumBinaryTree(nums, start, max - 1);
+        root.right = buildMaximumBinaryTree(nums, max+1, end);
+
+        return root;
+    }
 }
